@@ -1,4 +1,3 @@
-
 #!/bin/bash -l
 #SBATCH -J TopHat
 #SBATCH -o output_%j.txt
