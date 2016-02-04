@@ -40,18 +40,18 @@ dds<-DESeq(ddsHTSeqcol)
 dds
 res<-results(dds)
 res_baseMean5 <- subset(dds, res$baseMean > 5)
-nrow(res_baseMean5)#16 402
+nrow(res_baseMean5)
 #The effect of diet in Finnsheep. i.e Finnsheep with flushing diet vs Finnsheep with control diet.
 dFS_Diet<-results(dds, contrast=c("group", "FS.F", "FS.C"))
 dFS_Diet_sig<-subset(dFS_Diet, padj < 0.05)
-nrow(dFS_Diet_sig)#0 i.e no effect of diet in Finnsheep
+nrow(dFS_Diet_sig)
 
 ##########################################################################################
 #The effect of diet in Texel
 ##########################################################################################
 dTX_Diet<-results(dds, contrast=c("group", "TX.F", "TX.C"))
 dTX_Diet_sig<-subset(dTX_Diet, padj< 0.05)
-nrow(dTX_Diet_sig)#117
+nrow(dTX_Diet_sig)
 summary(dTX_Diet_sig)
 write.csv(dTX_Diet_sig, "dTX_Diet_sig.csv")
 rndTX_Diet_sig<-rownames(dTX_Diet_sig)
@@ -75,7 +75,7 @@ write.csv(bmdTX_Diet, "bmdTX_Diet_sig.csv")
 ###################################################################################
 dF1_Diet<-results(dds, contrast=c("group", "F1.F", "F1.C"), test = "Wald")
 dF1_Diet_sig<-subset(dF1_Diet, padj<0.05)
-nrow(dF1_Diet_sig)#26
+nrow(dF1_Diet_sig)
 summary(dF1_Diet_sig)
 write.csv(dF1_Diet_sig, "dF1_Diet_sig.csv")
 rndF1_Diet_sig<-rownames(dF1_Diet_sig)
@@ -95,7 +95,7 @@ write.csv(bmdF1_Diet, "bmdF1_Diet_sig.csv")
 ###################################################################################
 dFS_TX<-results(dds, contrast=list(c("groupFS.F", "groupTX.C"), c("groupFS.C", "groupTX.F")))
 dFS_TX_sig<-subset(dFS_TX, padj<0.05)
-nrow(dFS_TX_sig)#35
+nrow(dFS_TX_sig)
 summary(dFS_TX_sig)
 write.csv(dFS_TX_sig, "dFS_TX_sig.csv")
 rndFS_TX_sig<-rownames(dFS_TX_sig)
@@ -115,7 +115,7 @@ write.csv(bmdFS_TX, "bmdFS_TX_sig.csv")
 ###################################################################################
 dFS_F1<-results(dds, contrast=list(c("groupFS.F", "groupF1.C"), c("groupFS.C", "groupF1.F")), test = "wald")
 dFS_F1_sig<-subset(dFS_F1, padj<0.05)
-nrow(dFS_F1_sig) #5
+nrow(dFS_F1_sig) 
 summary(dFS_F1_sig)
 write.csv(dFS_F1_sig, "dFS_F1_sig.csv")
 rndFS_F1_sig<-rownames(dFS_F1_sig)
@@ -136,7 +136,7 @@ write.csv(bmdFS_F1, "bmdFS_F1_sig.csv")
 ###################################################################################
 dTX_F1<-results(dds, contrast=list(c("groupTX.F", "groupF1.C"), c("groupTX.C", "groupF1.F")))
 dTX_F1_sig<-subset(dTX_F1, padj<0.05)
-nrow(dTX_F1_sig)#73
+nrow(dTX_F1_sig)
 summary(dTX_F1_sig)
 write.csv(dTX_F1_sig, "dTX_F1_sig.csv")
 rndTX_F1_sig<-rownames(dTX_F1_sig)
@@ -156,7 +156,7 @@ write.csv(bmdTX_F1, "bmdTX_F1_sig.csv")
 #######################################################################################
 cFS_TX <- results(dds, contrast=c("group", "FS.C", "TX.C"))
 cFS_TX_sig<-subset(cFS_TX, padj < 0.05)
-nrow(cFS_TX_sig) #3
+nrow(cFS_TX_sig) 
 summary(cFS_TX_sig)
 write.csv(cFS_TX_sig, "cFS_TX_sig.csv")
 rncFS_TX_sig<-rownames(cFS_TX_sig)
@@ -176,7 +176,7 @@ write.csv(bmcFS_TX, "bmcFS_TX_sig.csv")
 ########################################################################################
 fFS_TX<-results(dds, contrast=c("group", "FS.F", "TX.F"))
 fFS_TX_sig<-subset(fFS_TX, padj < 0.05)
-nrow(fFS_TX_sig) #621
+nrow(fFS_TX_sig) 
 summary(fFS_TX_sig)
 write.csv(fFS_TX_sig, "fFS_TX_sig.csv")
 rnfFS_TX_sig<-rownames(fFS_TX_sig)
@@ -196,7 +196,7 @@ write.csv(bmfFS_TX, "bmfFS_TX_sig.csv")
 ##############################################################################################
 cFS_F1 <- results(dds, contrast=c("group", "FS.C", "F1.C"))
 cFS_F1_sig<-subset(cFS_F1, padj < 0.05)
-nrow(cFS_F1_sig) #2
+nrow(cFS_F1_sig) 
 summary(cFS_F1_sig)
 write.csv(cFS_F1_sig, "cFS_F1_sig.csv")
 rncFS_F1_sig<-rownames(cFS_F1_sig)
@@ -216,7 +216,7 @@ write.csv(bmcFS_F1, "bmcFS_F1_sig.csv")
 ##############################################################################################
 fFS_F1 <- results(dds, contrast=c("group", "FS.F", "F1.F"))
 fFS_F1_sig<-subset(fFS_F1, padj < 0.05)
-nrow(fFS_F1_sig) #51
+nrow(fFS_F1_sig) 
 summary(fFS_F1_sig)
 write.csv(fFS_F1_sig, "fFS_F1_sig.csv")
 rnfFS_F1_sig<-rownames(fFS_F1_sig)
@@ -236,7 +236,7 @@ write.csv(bmfFS_F1, "bmfFS_F1_sig.csv")
 ################################################################################################
 cTX_F1 <- results(dds, contrast=c("group", "TX.C", "F1.C"))
 cTX_F1_sig<-subset(cTX_F1, padj < 0.05)
-nrow(cTX_F1_sig) #60
+nrow(cTX_F1_sig) 
 summary(cTX_F1_sig)
 write.csv(cTX_F1_sig, "cTX_F1_sig.csv")
 rncTX_F1_sig<-rownames(cTX_F1_sig)
@@ -256,7 +256,7 @@ write.csv(bmcTX_F1, "bmcTX_F1_sig.csv")
 ################################################################################################
 fTX_F1 <- results(dds, contrast=c("group", "TX.F", "F1.F"))
 fTX_F1_sig<-subset(fTX_F1, padj<0.05)
-nrow(fTX_F1_sig) #311
+nrow(fTX_F1_sig) 
 summary(fTX_F1_sig)
 write.csv(fTX_F1_sig, "fTX_F1_sig.csv")
 rnfTX_F1_sig<-rownames(fTX_F1_sig)
@@ -314,21 +314,6 @@ bm_all_cluego_entrez<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id",
 
 write.csv(na.omit(bm_all_cluego_entrez), "bm_all_cluego_entrez.csv")
 
-
-
-
-
-dFS_TX = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/dFS_TX_sig.csv", header = T)
-dFS_F1 = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/dFS_F1_sig.csv", header = T)
-dTX_F1 = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/dTX_F1_sig.csv")
-dTX_diet = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/dTX_Diet_sig.csv")
-dF1_diet = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/dF1_Diet_sig.csv")
-fFS_TX = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/fFS_TX_sig.csv")
-cFS_TX = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/cFS_TX_sig.csv")
-fFS_F1 = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/dFS_F1_sig.csv")
-cFS_F1 = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/cFS_F1_sig.csv")
-fTX_F1 = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/fTX_F1_sig.csv")
-cTX_F1 = read.csv("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/cTX_F1_sig.csv")
 
 attr<-listAttributes(ensembl)
 head(attr, n=50)
