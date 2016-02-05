@@ -18,6 +18,6 @@ b=$(echo ${i} | sed 's/_R1_001.fastq.gz/_R2_001.fastq.gz/')
 dir="${i%%_*}"
 
 #Run tophat
-tophat -p 8 -o /wrk/kipokh/Data/mRNA/mAlign/Sheep_Sheep/mAlign2S/ENS75/$dir \
--G /wrk/kipokh/Data/Genomes/Sheep/ENS75/Annotation/Oarv31Ens75.gtf \
-/wrk/kipokh/Data/Genomes/Sheep/ENS75/Sequence/Oarv31Ens75 $i $b
+tophat -p 8 -o /wrk/kipokh/Data/mRNA/output_location/$dir \
+-G /wrk/kipokh/Data/.../xxx.gtf \
+/wrk/kipokh/Data/genome_file_location/ref_genome $i $b
