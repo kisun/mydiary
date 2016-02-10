@@ -6,7 +6,7 @@
 ## Author: Kisun Pokharel (kisun.pokharel@helsinki.fi
 ##
 ############################################################################
-#!/bin/bash
+
 ##note first few steps may be run only once for one project, comment and 
 ##change their dependencies accordingly for related jobs
 
