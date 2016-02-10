@@ -9,7 +9,13 @@
 
 ##note first few steps may be run only once for one project, comment and 
 ##change their dependencies accordingly for related jobs
-
+mkdir -p results/fastqc-pretrim
+mkdir -p results/trimmomatic
+mkdir -p results/fastqc-posttrim
+mkdir -p results/tophat
+mkdir -p results/cufflinks
+mkdir -p results-htseq
+mkdir -p results-rseqc
 
 #Download both the reference genome and annotations (.gtf) file
 Genome=$(sbatch getgenome.sh| cut -f 4 -d' ')
