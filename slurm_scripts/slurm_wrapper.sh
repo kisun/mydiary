@@ -14,8 +14,8 @@ mkdir -p results/trimmomatic
 mkdir -p results/fastqc-posttrim
 mkdir -p results/tophat
 mkdir -p results/cufflinks
-mkdir -p results-htseq
-mkdir -p results-rseqc
+mkdir -p results/htseq-count
+mkdir -p results/rseqc
 
 #Download both the reference genome and annotations (.gtf) file
 Genome=$(sbatch getgenome.sh| cut -f 4 -d' ')
