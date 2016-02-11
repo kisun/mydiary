@@ -22,3 +22,5 @@ In this stage of the analysis, we can download reference genome and annotation f
 <li>Splicing</li>
 <li>Exon usage</li>
 </ul>
+
+[Wiki](https://github.com/Kisun/mydiary/wiki)
