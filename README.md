@@ -9,16 +9,17 @@ The following are the different analyses that can be done using RNA-seq data.
 Analysis steps
 ----------
 ###Basic Data analyses
-<ol>
+<ul>
+<li>Preparation</li>
 <li>Quality control</li>
 <li>Mapping</li>
 <li>Assembly/Quantification</li>
 <li>Differential Expression</li>
-</ol>
+</ul>
 
 ###Additional Analyses
-<ol start = 5>
+<ul start = 5>
 <li>Variant analysis</li>
 <li>Splicing</li>
 <li>Exon usage</li>
-</ol>
+</ul>
