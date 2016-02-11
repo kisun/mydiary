@@ -6,11 +6,9 @@ The repository will contain all necessary methods for doing rna-seq data analysi
 The following are the different analyses that can be done using RNA-seq data.
 
 
-Analysis steps
-----------
 ###Basic Data analyses
 <ul> <!--after finalizing, the list can be made ordered list using ol (ordered list) instead of ul (unordered list) -->
-<li> <b>Preparation </b></li>
+<li> <a href="https://github.com/Kisun/mydiary/rnaseq_pipeline/wiki/Preparation">Preparation </a></li>
 In this stage of the analysis, we can download reference genome and annotation file. I prefer to download these files from Ensembl. 
 <li>Quality control</li>
 <li>Mapping</li>
