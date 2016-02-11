@@ -1,34 +1,34 @@
-Split large file with multiple lines
+#Split large file with multiple lines
 
-Sometimes, you need to split large file into smaller parts. For example, to retrieve sequences for list of Gene IDs using  batch entrez. A simple split command does the job.
+#Sometimes, you need to split large file into smaller parts. For example, to retrieve sequences for list of Gene IDs using  batch entrez. A simple split command does the job.
 
 split -l NN filename : where NN is the number of lines
 
-Remove everything after certain character in a tabular formatted file
+#Remove everything after certain character in a tabular formatted file
 
 cut -f1 -d “,” filename > new_filename
 
-This command will remove everything after “,” (comma) from the first column.
+#This command will remove everything after “,” (comma) from the first column.
 
-Remove everything before character
+#Remove everything before character
 
 awk -F ‘char or string’ ‘{print $2}’ filename > new_filename
 
-Remove empty lines
+#Remove empty lines
 
 awk ‘NF’ filename > new_filename
 
-Make a new table based on a string from original table
+#Make a new table based on a string from original table
 
 awk -F “\t” ‘/class_code=”u”/ {print $0}’ filename.gtf > new_filename.gtf
 
-This will create a new .gtf file which list all  transcripts with class code “u” from original .gtf file.
+#This will create a new .gtf file which list all  transcripts with class code “u” from original .gtf file.
 
-Go to particular line number
+#Go to particular line number
 
 sed -n ‘line_no’p filename
 
-Edit/replace a line with different string
+#Edit/replace a line with different string
 
 sed -i ‘/linenumber/.*/new_string/’ filename
 
