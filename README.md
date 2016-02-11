@@ -9,7 +9,7 @@ The following are the different analyses that can be done using RNA-seq data.
 Analysis steps
 ----------
 ###Basic Data analyses
-<ul>
+<ul> #after finalizing, the list can be made ordered list using ol (ordered list) instead of ul (unordered list)
 <li>Preparation</li>
 <li>Quality control</li>
 <li>Mapping</li>
