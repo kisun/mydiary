@@ -44,30 +44,27 @@ and so on..
 
 Second Round
 Extract unique IDS from FIN, TEX and FXT deleterious SNPS
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ awk '{print $1}' deleterious_FIN.txt| sort | uniq -c|awk '{print $2}'> deleterious_FIN_id.txt 
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ awk '{print $1}' deleterious_TEX.txt| sort | uniq -c|awk '{print $2}'> deleterious_TEX_id.txt 
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ awk '{print $1}' deleterious_FXT.txt| sort | uniq -c|awk '{print $2}'> deleterious_FXT_id.txt 
+awk '{print $1}' deleterious_FIN.txt| sort | uniq -c|awk '{print $2}'> deleterious_FIN_id.txt 
+awk '{print $1}' deleterious_TEX.txt| sort | uniq -c|awk '{print $2}'> deleterious_TEX_id.txt 
+awk '{print $1}' deleterious_FXT.txt| sort | uniq -c|awk '{print $2}'> deleterious_FXT_id.txt 
 
 FIND SNPS in one breed that are not in another breed
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_FIN_id.txt deleterious_TEX_id.txt > deleterious_FINnotTEX.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_TEX_id.txt deleterious_FIN_id.txt > deleterious_TEXnotFIN.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_FIN_id.txt deleterious_FXT_id.txt > deleterious_FINnotFXT.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_FXT_id.txt deleterious_FIN_id.txt > deleterious_FXTnotFIN.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_TEX_id.txt deleterious_FXT_id.txt > deleterious_TEXnotFXT.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_FXT_id.txt deleterious_TEX_id.txt > deleterious_FXTnotTEX.txt
+comm -23 deleterious_FIN_id.txt deleterious_TEX_id.txt > deleterious_FINnotTEX.txt
+comm -23 deleterious_TEX_id.txt deleterious_FIN_id.txt > deleterious_TEXnotFIN.txt
+comm -23 deleterious_FIN_id.txt deleterious_FXT_id.txt > deleterious_FINnotFXT.txt
+comm -23 deleterious_FXT_id.txt deleterious_FIN_id.txt > deleterious_FXTnotFIN.txt
+comm -23 deleterious_TEX_id.txt deleterious_FXT_id.txt > deleterious_TEXnotFXT.txt
+comm -23 deleterious_FXT_id.txt deleterious_TEX_id.txt > deleterious_FXTnotTEX.txt
 
 FIND common SNPS in two breeds
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -12 deleterious_FIN_id.txt deleterious_TEX_id.txt > deleterious_comm_FIN_TEX.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -12 deleterious_FIN_id.txt deleterious_FXT_id.txt > deleterious_comm_FIN_FXT.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -12 deleterious_TEX_id.txt deleterious_FXT_id.txt > deleterious_comm_TEX_FXT.txt
+comm -12 deleterious_FIN_id.txt deleterious_TEX_id.txt > deleterious_comm_FIN_TEX.txt
+comm -12 deleterious_FIN_id.txt deleterious_FXT_id.txt > deleterious_comm_FIN_FXT.txt
+comm -12 deleterious_TEX_id.txt deleterious_FXT_id.txt > deleterious_comm_TEX_FXT.txt
 
 FIND common SNPS in three breeds
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -12 deleterious_comm_FIN_TEX.txt deleterious_FXT_id.txt > deleterious_comm_FIN_TEX_FXT.txt 
+comm -12 deleterious_comm_FIN_TEX.txt deleterious_FXT_id.txt > deleterious_comm_FIN_TEX_FXT.txt 
 
 SNPs found only in given breed
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_FINnotTEX.txt deleterious_FXT_id.txt > deleterious_onlyFIN.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_TEXnotFIN.txt deleterious_FXT_id.txt > deleterious_onlyTEX.txt
-ejo129@MTTCM:/media/somics/365370, 244gb/Root/Data/Ensembl_Vep_DataII/Sept15$ comm -23 deleterious_FXTnotFIN.txt deleterious_TEX_id.txt > deleterious_onlyFXT.txt
-
-
-
+comm -23 deleterious_FINnotTEX.txt deleterious_FXT_id.txt > deleterious_onlyFIN.txt
+comm -23 deleterious_TEXnotFIN.txt deleterious_FXT_id.txt > deleterious_onlyTEX.txt
+comm -23 deleterious_FXTnotFIN.txt deleterious_TEX_id.txt > deleterious_onlyFXT.txt
