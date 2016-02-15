@@ -1,3 +1,4 @@
+#Now we don't need to specity the working directory
 #setwd("/media/somics/Data/miRNA/2/CAP-MiRSEQ/differential_expression")
 library("DESeq2")
 library("BiocParallel")
