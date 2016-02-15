@@ -1,7 +1,7 @@
 #Differential expression analysis on within  and between breeds that are affected by diet treatment. We have three breed groups: Finnsheep (high prolific), Texel (low prolific)
 # and F1-cross of Finnsheep and Texel. In all breed groups, half of the ewes were kept in flushing diet (additional nutrient). Thus, here we find how diet is affecting within the breed but also how 
 #different breeds react differently to diet (i.e genes that are differentially expressed with diet as a contributing factor).
-#setwd("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/")
+#setwd("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/") .
 library("biomaRt")
 library("DESeq2")
 library("BiocParallel")
