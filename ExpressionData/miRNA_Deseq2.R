@@ -1,5 +1,5 @@
 #Now we don't need to specity the working directory
-#setwd("/media/somics/Data/miRNA/2/CAP-MiRSEQ/differential_expression")
+#setwd("/media/somics/Data/gitrepo/mydiary")
 library("DESeq2")
 library("BiocParallel")
 #library("edgeR")
@@ -14,10 +14,10 @@ register(MulticoreParam(4))
 #directory<-"/media/ejo129/hd2/mRNA/DifferentialExpression/DESeq_htseq_Modified_using_only_37C6/counts"
 #sampleFiles<-list.files(directory)
 #sampleFiles
-micountdata<-read.csv("ExpressionData/novel_known_miRNA.csv", row.names=1, header=TRUE)
+micountdata<-read.csv("ExpressionData/novel_known_miRNA.csv",row.names = 1, header=TRUE)
 head(micountdata)
 #The sample table was constructed using sample names with respective groups and conditions.
-misampleinfo<-read.table("ExpressionData/SampleTable_miRNA2S.csv", header=TRUE)
+misampleinfo<-read.csv("ExpressionData/SampleTable_miRNA2S.csv", header=TRUE)
 head(misampleinfo)
 misample<-misampleinfo$Sample
 mibreed<-misampleinfo$Breed
@@ -25,8 +25,8 @@ midiet<-misampleinfo$Diet
 misampletable<-data.frame(sample=misample, breed=mibreed, diet=midiet)
 migroup<-factor(paste(mibreed, midiet, sep="."))
 misampletable<-cbind(misampletable, migroup=migroup)
-head(misampletable)
-#colnames(micountdata)<-misampletable$sample
+misampletable
+colnames(micountdata)<-misampletable$sample
 middsMat<-DESeqDataSetFromMatrix(countData=micountdata, colData=misampletable, design=~migroup)
 midds<-DESeq(middsMat)
 miexpre_all<-results(midds)
@@ -38,7 +38,6 @@ nrow(miexpre_bm50)# 236 (153 novel)
 nrow(miexpre_bm100)#191 (123 novel)
 miexpre_bm100_data<-mcols(miexpre_bm100, use.names=TRUE)
 #write.csv(expre_bm100_data, "novelmiRNAsBaseMeangeq100.csv")
-resultsNames(midds)
 miexpre_bm10<-subset(midds, miexpre_all$baseMean>=10)
 nrow(miexpre_bm10)# 342 (238 novel)
 miexpre_bm10_data<-mcols(miexpre_bm10, use.names=TRUE)
