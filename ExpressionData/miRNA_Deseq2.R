@@ -1,6 +1,5 @@
 #Now we don't need to specity the working directory
 #setwd("/media/somics/Data/gitrepo/mydiary")
-setwd("/media/somics/Data/gitrepo/mydiary")
 library("DESeq2")
 library("BiocParallel")
 #library("edgeR")
@@ -19,13 +18,8 @@ micountdata<-read.csv("ExpressionData/novel_known_miRNA.csv",row.names = 1, head
 head(micountdata)
 #The sample table was constructed using sample names with respective groups and conditions.
 misampleinfo<-read.csv("ExpressionData/SampleTable_miRNA2S.csv", header=TRUE)
-micountdata<-read.table("./ExpressionData/novel_known_miRNA.csv", header=TRUE, sep = ",")
-head(micountdata)
-#The sample table was constructed using sample names with respective groups and conditions.
-misampleinfo<-read.table("./ExpressionData/SampleTable_miRNA2S.csv", header=TRUE, sep = ",")
 head(misampleinfo)
 misample<-misampleinfo$Sample
-misample
 mibreed<-misampleinfo$Breed
 midiet<-misampleinfo$Diet
 misampletable<-data.frame(sample=misample, breed=mibreed, diet=midiet)
