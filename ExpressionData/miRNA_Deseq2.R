@@ -1,5 +1,9 @@
 #Now we don't need to specity the working directory
+<<<<<<< HEAD
 #setwd("/media/somics/Data/gitrepo/mydiary")
+=======
+setwd("/media/somics/Data/gitrepo/mydiary")
+>>>>>>> 10977076ef62e0cf7b14aa8c440fc17d2ea0f6af
 library("DESeq2")
 library("BiocParallel")
 #library("edgeR")
@@ -14,12 +18,20 @@ register(MulticoreParam(4))
 #directory<-"/media/ejo129/hd2/mRNA/DifferentialExpression/DESeq_htseq_Modified_using_only_37C6/counts"
 #sampleFiles<-list.files(directory)
 #sampleFiles
+<<<<<<< HEAD
 micountdata<-read.csv("ExpressionData/novel_known_miRNA.csv",row.names = 1, header=TRUE)
 head(micountdata)
 #The sample table was constructed using sample names with respective groups and conditions.
 misampleinfo<-read.csv("ExpressionData/SampleTable_miRNA2S.csv", header=TRUE)
+=======
+micountdata<-read.table("./ExpressionData/novel_known_miRNA.csv", header=TRUE, sep = ",")
+head(micountdata)
+#The sample table was constructed using sample names with respective groups and conditions.
+misampleinfo<-read.table("./ExpressionData/SampleTable_miRNA2S.csv", header=TRUE, sep = ",")
+>>>>>>> 10977076ef62e0cf7b14aa8c440fc17d2ea0f6af
 head(misampleinfo)
 misample<-misampleinfo$Sample
+misample
 mibreed<-misampleinfo$Breed
 midiet<-misampleinfo$Diet
 misampletable<-data.frame(sample=misample, breed=mibreed, diet=midiet)
