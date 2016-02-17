@@ -1,7 +1,7 @@
 #Differential expression analysis on within  and between breeds that are affected by diet treatment. We have three breed groups: Finnsheep (high prolific), Texel (low prolific)
 # and F1-cross of Finnsheep and Texel. In all breed groups, half of the ewes were kept in flushing diet (additional nutrient). Thus, here we find how diet is affecting within the breed but also how 
 #different breeds react differently to diet (i.e genes that are differentially expressed with diet as a contributing factor).
-#setwd("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/") .
+#setwd("/media/somics/Data/mRNA/2/Aug15/DiffExp/39Samples_Jan16/")
 library("biomaRt")
 library("DESeq2")
 library("BiocParallel")
@@ -17,19 +17,19 @@ ensembl = useEnsembl(biomart = "ENSEMBL_MART_ENSEMBL", dataset="oaries_gene_ense
 ##################################################################################################
 ##################################################################################################
 directory<-"ExpressionData/mRNA_counts/"
-msampleFiles<-grep("counts", list.files(directory), value = TRUE)
-msampleFiles<-list.files(directory, pattern = "*_counts")
-msampleFiles
-msampleinfo<-read.csv("ExpressionData/SampleTable_mRNA_all.csv", header=TRUE)
-row.names(msampleinfo)
-msample<-sampleinfo$Sample
-mbreed<-sampleinfo$Breed
-mdiet<-sampleinfo$Diet
-mid<-msampleinfo$SampleID
-msampletable<-data.frame(sampleName=msample, fileName=msampleFiles,breed=mbreed, diet=mdiet, id=mid)
-mgroup<-factor(paste(mbreed, mdiet, sep="."))
-msampletable<-cbind(msampletable, group=mgroup)
-msampletable
+sampleFiles<-grep("counts", list.files(directory), value = TRUE)
+sampleFiles<-list.files(directory, pattern = "*_counts")
+sampleFiles
+sampleinfo<-read.csv("ExpressionData/SampleTable_mRNA_all.csv", header=TRUE)
+row.names(sampleinfo)
+sample<-sampleinfo$Sample
+breed<-sampleinfo$Breed
+diet<-sampleinfo$Diet
+id<-sampleinfo$SampleID
+sampletable<-data.frame(sampleName=sample, fileName=sampleFiles,breed=breed, diet=diet, id=id)
+group<-factor(paste(breed, diet, sep="."))
+sampletable<-cbind(sampletable, group=group)
+sampletable
 
 #****************************************************************************************
 #Comparisions including diet as second factor
