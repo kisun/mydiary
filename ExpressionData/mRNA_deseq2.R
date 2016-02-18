@@ -53,11 +53,11 @@ dTX_Diet<-results(dds, contrast=c("group", "TX.F", "TX.C"))
 dTX_Diet_sig<-subset(dTX_Diet, padj< 0.05)
 nrow(dTX_Diet_sig)#117
 summary(dTX_Diet_sig)
-write.csv(dTX_Diet_sig, "mRNA_out/dTX_Diet_sig.csv")
+write.csv(dTX_Diet_sig, "ExpressionData/mRNA_out/dTX_Diet_sig.csv")
 rndTX_Diet_sig<-rownames(dTX_Diet_sig)
 #Retrive GO IDs although GO annotations and KEGG pathway analysis are done in Cytoscape using ClueGO plugin
 godTX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rndTX_Diet_sig, mart=ensembl)
-write.csv(godTX_sig, "mRNA_out/godTX_sig.csv")
+write.csv(godTX_sig, "ExpressionData/mRNA_out/godTX_sig.csv")
 #We retrieve some basic information for each differentially expressed genes using biomart.
 bmdTX_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                         "external_gene_name","chromosome_name", "description"), values=rndTX_Diet_sig, mart=ensembl)
@@ -65,10 +65,10 @@ bmdTX_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attri
 ortho_bmdTX_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                               "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rndTX_Diet_sig, mart=ensembl)
 
-write.csv(ortho_bmdTX_Diet_sig, "mRNA_out/ortho_bmdTX_diet_sig.csv")
+write.csv(ortho_bmdTX_Diet_sig, "ExpressionData/mRNA_out/ortho_bmdTX_diet_sig.csv")
 sortbmdTX_Diet_sig<-cbind(bmdTX_Diet_sig[match(rndTX_Diet_sig, bmdTX_Diet_sig$ensembl_gene_id),])
 bmdTX_Diet<-cbind(dTX_Diet_sig, bmdTX_Diet_sig)
-write.csv(bmdTX_Diet, "mRNA_out/bmdTX_Diet_sig.csv")
+write.csv(bmdTX_Diet, "ExpressionData/mRNA_out/bmdTX_Diet_sig.csv")
 
 ###################################################################################
 #The effect of diet in F1-cross
@@ -77,18 +77,18 @@ dF1_Diet<-results(dds, contrast=c("group", "F1.F", "F1.C"))
 dF1_Diet_sig<-subset(dF1_Diet, padj<0.05)
 nrow(dF1_Diet_sig)#26
 summary(dF1_Diet_sig)
-write.csv(dF1_Diet_sig, "mRNA_out/dF1_Diet_sig.csv")
+write.csv(dF1_Diet_sig, "ExpressionData/mRNA_out/dF1_Diet_sig.csv")
 rndF1_Diet_sig<-rownames(dF1_Diet_sig)
 godF1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rndF1_Diet_sig, mart=ensembl)
-write.csv(godF1_sig, "mRNA_out/godF1_sig.csv")
+write.csv(godF1_sig, "ExpressionData/mRNA_out/godF1_sig.csv")
 bmdF1_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                         "external_gene_name", "chromosome_name", "description"), values=rndF1_Diet_sig, mart=ensembl)
 ortho_bmdF1_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                               "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rndF1_Diet_sig, mart=ensembl)
-write.csv(ortho_bmdF1_Diet_sig, "mRNA_out/ortho_bmdF1_diet_sig.csv")
+write.csv(ortho_bmdF1_Diet_sig, "ExpressionData/mRNA_out/ortho_bmdF1_diet_sig.csv")
 sortbmdF1_Diet_sig<-cbind(bmdF1_Diet_sig[match(rndF1_Diet_sig, bmdF1_Diet_sig$ensembl_gene_id),])
 bmdF1_Diet<-cbind(dF1_Diet_sig, bmdF1_Diet_sig)
-write.csv(bmdF1_Diet, "mRNA_out/bmdF1_Diet_sig.csv")
+write.csv(bmdF1_Diet, "ExpressionData/mRNA_out/bmdF1_Diet_sig.csv")
 
 ###################################################################################
 #The difference in Finnsheep and Texel due to diet effect
@@ -97,18 +97,18 @@ dFS_TX<-results(dds, contrast=list(c("groupFS.F", "groupTX.C"), c("groupFS.C", "
 dFS_TX_sig<-subset(dFS_TX, padj<0.05)
 nrow(dFS_TX_sig)#35
 summary(dFS_TX_sig)
-write.csv(dFS_TX_sig, "mRNA_out/dFS_TX_sig.csv")
+write.csv(dFS_TX_sig, "ExpressionData/mRNA_out/dFS_TX_sig.csv")
 rndFS_TX_sig<-rownames(dFS_TX_sig)
 godFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rndFS_TX_sig, mart=ensembl)
-write.csv(godFS_TX_sig, "mRNA_out/godFS_TX_sig.csv")
+write.csv(godFS_TX_sig, "ExpressionData/mRNA_out/godFS_TX_sig.csv")
 bmdFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rndFS_TX_sig, mart=ensembl)
 ortho_bmdFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rndFS_TX_sig, mart=ensembl)
-write.csv(ortho_bmdFS_TX_sig, "mRNA_out/ortho_bmdFS_TX_sig.csv")
+write.csv(ortho_bmdFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmdFS_TX_sig.csv")
 sortbmdFS_TX_sig<-cbind(bmdFS_TX_sig[match(rndFS_TX_sig, bmdFS_TX_sig$ensembl_gene_id),])
 bmdFS_TX<-cbind(dFS_TX_sig, bmdFS_TX_sig)
-write.csv(bmdFS_TX, "mRNA_out/bmdFS_TX_sig.csv")
+write.csv(bmdFS_TX, "ExpressionData/mRNA_out/bmdFS_TX_sig.csv")
 
 ###################################################################################
 #The difference in Finsheep and F1 due to diet effect
@@ -117,19 +117,19 @@ dFS_F1<-results(dds, contrast=list(c("groupFS.F", "groupF1.C"), c("groupFS.C", "
 dFS_F1_sig<-subset(dFS_F1, padj<0.05)
 nrow(dFS_F1_sig) #5
 summary(dFS_F1_sig)
-write.csv(dFS_F1_sig, "mRNA_out/dFS_F1_sig.csv")
+write.csv(dFS_F1_sig, "ExpressionData/mRNA_out/dFS_F1_sig.csv")
 rndFS_F1_sig<-rownames(dFS_F1_sig)
 godFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rndFS_F1_sig, mart=ensembl)
-write.csv(godFS_F1_sig, "mRNA_out/godFS_F1_sig.csv")
+write.csv(godFS_F1_sig, "ExpressionData/mRNA_out/godFS_F1_sig.csv")
 bmdFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rndFS_F1_sig, mart=ensembl)
 ortho_bmdFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rndFS_F1_sig, mart=ensembl)
-write.csv(ortho_bmdFS_F1_sig, "mRNA_out/ortho_bmdFS_F1_sig.csv")
+write.csv(ortho_bmdFS_F1_sig, "ExpressionData/mRNA_out/ortho_bmdFS_F1_sig.csv")
 sortbmdFS_TX_sig<-cbind(bmdFS_TX_sig[match(rndFS_TX_sig, bmdFS_TX_sig$ensembl_gene_id),])
 sortbmdFS_F1_sig<-cbind(bmdFS_F1_sig[match(rndFS_F1_sig, bmdFS_F1_sig$ensembl_gene_id),])
 bmdFS_F1<-cbind(dFS_F1_sig, bmdFS_F1_sig)
-write.csv(bmdFS_F1, "mRNA_out/bmdFS_F1_sig.csv")
+write.csv(bmdFS_F1, "ExpressionData/mRNA_out/bmdFS_F1_sig.csv")
 
 ###################################################################################
 #The difference in Texel and F1 due to diet effect
@@ -138,18 +138,18 @@ dTX_F1<-results(dds, contrast=list(c("groupTX.F", "groupF1.C"), c("groupTX.C", "
 dTX_F1_sig<-subset(dTX_F1, padj<0.05)
 nrow(dTX_F1_sig)#73
 summary(dTX_F1_sig)
-write.csv(dTX_F1_sig, "mRNA_out/dTX_F1_sig.csv")
+write.csv(dTX_F1_sig, "ExpressionData/mRNA_out/dTX_F1_sig.csv")
 rndTX_F1_sig<-rownames(dTX_F1_sig)
 godTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rndTX_F1_sig, mart=ensembl)
-write.csv(godTX_F1_sig, "mRNA_out/godTX_F1_sig.csv")
+write.csv(godTX_F1_sig, "ExpressionData/mRNA_out/godTX_F1_sig.csv")
 bmdTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rndTX_F1_sig, mart=ensembl)
 ortho_bmdTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rndTX_F1_sig, mart=ensembl)
-write.csv(ortho_bmdTX_F1_sig, "mRNA_out/ortho_bmdTX_F1_sig.csv")
+write.csv(ortho_bmdTX_F1_sig, "ExpressionData/mRNA_out/ortho_bmdTX_F1_sig.csv")
 sortbmdTX_F1_sig<-cbind(bmdTX_F1_sig[match(rndTX_F1_sig, bmdTX_F1_sig$ensembl_gene_id),])
 bmdTX_F1<-cbind(dTX_F1_sig, bmdTX_F1_sig)
-write.csv(bmdTX_F1, "mRNA_out/bmdTX_F1_sig.csv")
+write.csv(bmdTX_F1, "ExpressionData/mRNA_out/bmdTX_F1_sig.csv")
 
 #######################################################################################
 #The difference between Finnsheep and Texel with Control diet
@@ -158,18 +158,18 @@ cFS_TX <- results(dds, contrast=c("group", "FS.C", "TX.C"))
 cFS_TX_sig<-subset(cFS_TX, padj < 0.05)
 nrow(cFS_TX_sig) #3
 summary(cFS_TX_sig)
-write.csv(cFS_TX_sig, "mRNA_out/cFS_TX_sig.csv")
+write.csv(cFS_TX_sig, "ExpressionData/mRNA_out/cFS_TX_sig.csv")
 rncFS_TX_sig<-rownames(cFS_TX_sig)
 gocFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rncFS_TX_sig, mart=ensembl)
-write.csv(gocFS_TX_sig, "mRNA_out/gocFS_TX_sig.csv")
+write.csv(gocFS_TX_sig, "ExpressionData/mRNA_out/gocFS_TX_sig.csv")
 bmcFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rncFS_TX_sig, mart=ensembl)
 ortho_bmcFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rncFS_TX_sig, mart=ensembl)
-write.csv(ortho_bmcFS_TX_sig, "mRNA_out/ortho_bmcFS_TX_sig.csv")
+write.csv(ortho_bmcFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmcFS_TX_sig.csv")
 sortbmcFS_TX_sig<-cbind(bmcFS_TX_sig[match(rncFS_TX_sig, bmcFS_TX_sig$ensembl_gene_id),])
 bmcFS_TX<-cbind(cFS_TX_sig, bmcFS_TX_sig)
-write.csv(bmcFS_TX, "mRNA_out/bmcFS_TX_sig.csv")
+write.csv(bmcFS_TX, "ExpressionData/mRNA_out/bmcFS_TX_sig.csv")
 
 #######################################################################################
 #The difference between Finnsheep and Texel with flushing diet
@@ -178,18 +178,18 @@ fFS_TX<-results(dds, contrast=c("group", "FS.F", "TX.F"))
 fFS_TX_sig<-subset(fFS_TX, padj < 0.05)
 nrow(fFS_TX_sig) #621
 summary(fFS_TX_sig)
-write.csv(fFS_TX_sig, "mRNA_out/fFS_TX_sig.csv")
+write.csv(fFS_TX_sig, "ExpressionData/mRNA_out/fFS_TX_sig.csv")
 rnfFS_TX_sig<-rownames(fFS_TX_sig)
 gofFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rnfFS_TX_sig, mart=ensembl)
-write.csv(gofFS_TX_sig, "mRNA_out/gofFS_TX_sig.csv")
+write.csv(gofFS_TX_sig, "ExpressionData/mRNA_out/gofFS_TX_sig.csv")
 bmfFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rnfFS_TX_sig, mart=ensembl)
 ortho_bmfFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rnfFS_TX_sig, mart=ensembl)
-write.csv(ortho_bmfFS_TX_sig, "mRNA_out/ortho_bmfFS_TX_sig.csv")
+write.csv(ortho_bmfFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmfFS_TX_sig.csv")
 sortbmfFS_TX_sig<-cbind(bmfFS_TX_sig[match(rnfFS_TX_sig, bmfFS_TX_sig$ensembl_gene_id),])
 bmfFS_TX<-cbind(fFS_TX_sig, bmfFS_TX_sig)
-write.csv(bmfFS_TX, "mRNA_out/bmfFS_TX_sig.csv")
+write.csv(bmfFS_TX, "ExpressionData/mRNA_out/bmfFS_TX_sig.csv")
 
 ##############################################################################################
 #The difference between Finnsheep and F1 with control diet
@@ -198,18 +198,18 @@ cFS_F1 <- results(dds, contrast=c("group", "FS.C", "F1.C"))
 cFS_F1_sig<-subset(cFS_F1, padj < 0.05)
 nrow(cFS_F1_sig) #2
 summary(cFS_F1_sig)
-write.csv(cFS_F1_sig, "mRNA_out/cFS_F1_sig.csv")
+write.csv(cFS_F1_sig, "ExpressionData/mRNA_out/cFS_F1_sig.csv")
 rncFS_F1_sig<-rownames(cFS_F1_sig)
 gocFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rncFS_F1_sig, mart=ensembl)
-write.csv(gocFS_F1_sig, "mRNA_out/gocFS_F1_sig.csv")
+write.csv(gocFS_F1_sig, "ExpressionData/mRNA_out/gocFS_F1_sig.csv")
 bmcFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rncFS_F1_sig, mart=ensembl)
 ortho_bmcFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rncFS_F1_sig, mart=ensembl)
-write.csv(ortho_bmcFS_F1_sig, "mRNA_out/ortho_bmcFS_F1_sig.csv")
+write.csv(ortho_bmcFS_F1_sig, "ExpressionData/mRNA_out/ortho_bmcFS_F1_sig.csv")
 sortbmcFS_F1_sig<-cbind(bmcFS_F1_sig[match(rncFS_F1_sig, bmcFS_F1_sig$ensembl_gene_id),])
 bmcFS_F1<-cbind(cFS_F1_sig, bmcFS_F1_sig)
-write.csv(bmcFS_F1, "mRNA_out/bmcFS_F1_sig.csv")
+write.csv(bmcFS_F1, "ExpressionData/mRNA_out/bmcFS_F1_sig.csv")
 
 ##############################################################################################
 #The difference between Finnsheep and F1 with flushing diet
@@ -218,18 +218,18 @@ fFS_F1 <- results(dds, contrast=c("group", "FS.F", "F1.F"))
 fFS_F1_sig<-subset(fFS_F1, padj < 0.05)
 nrow(fFS_F1_sig) #51
 summary(fFS_F1_sig)
-write.csv(fFS_F1_sig, "mRNA_out/fFS_F1_sig.csv")
+write.csv(fFS_F1_sig, "ExpressionData/mRNA_out/fFS_F1_sig.csv")
 rnfFS_F1_sig<-rownames(fFS_F1_sig)
 gofFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rnfFS_F1_sig, mart=ensembl)
-write.csv(gofFS_F1_sig, "mRNA_out/gofFS_F1_sig.csv")
+write.csv(gofFS_F1_sig, "ExpressionData/mRNA_out/gofFS_F1_sig.csv")
 bmfFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rnfFS_F1_sig, mart=ensembl)
 ortho_bmfFS_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rnfFS_F1_sig, mart=ensembl)
-write.csv(ortho_bmfFS_F1_sig, "mRNA_out/ortho_bmfFS_F1_sig.csv")
+write.csv(ortho_bmfFS_F1_sig, "ExpressionData/mRNA_out/ortho_bmfFS_F1_sig.csv")
 sortbmfFS_F1_sig<-cbind(bmfFS_F1_sig[match(rnfFS_F1_sig, bmfFS_F1_sig$ensembl_gene_id),])
 bmfFS_F1<-cbind(fFS_F1_sig, bmfFS_F1_sig)
-write.csv(bmfFS_F1, "mRNA_out/bmfFS_F1_sig.csv")
+write.csv(bmfFS_F1, "ExpressionData/mRNA_out/bmfFS_F1_sig.csv")
 
 ################################################################################################
 #The difference between Texel and F1 with control diet
@@ -238,18 +238,18 @@ cTX_F1 <- results(dds, contrast=c("group", "TX.C", "F1.C"))
 cTX_F1_sig<-subset(cTX_F1, padj < 0.05)
 nrow(cTX_F1_sig) #60
 summary(cTX_F1_sig)
-write.csv(cTX_F1_sig, "mRNA_out/cTX_F1_sig.csv")
+write.csv(cTX_F1_sig, "ExpressionData/mRNA_out/cTX_F1_sig.csv")
 rncTX_F1_sig<-rownames(cTX_F1_sig)
 gocTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rncTX_F1_sig, mart=ensembl)
-write.csv(gocTX_F1_sig, "mRNA_out/gocTX_F1_sig.csv")
+write.csv(gocTX_F1_sig, "ExpressionData/mRNA_out/gocTX_F1_sig.csv")
 bmcTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rncTX_F1_sig, mart=ensembl)
 ortho_bmcTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rncTX_F1_sig, mart=ensembl)
-write.csv(ortho_bmcTX_F1_sig, "mRNA_out/ortho_bmcTX_F1_sig.csv")
+write.csv(ortho_bmcTX_F1_sig, "ExpressionData/mRNA_out/ortho_bmcTX_F1_sig.csv")
 sortbmcTX_F1_sig<-cbind(bmcTX_F1_sig[match(rncTX_F1_sig, bmcTX_F1_sig$ensembl_gene_id),])
 bmcTX_F1<-cbind(cTX_F1_sig, bmcTX_F1_sig)
-write.csv(bmcTX_F1, "mRNA_out/bmcTX_F1_sig.csv")
+write.csv(bmcTX_F1, "ExpressionData/mRNA_out/bmcTX_F1_sig.csv")
 
 ################################################################################################
 #The difference between Texel and F1 with flushing diet
@@ -258,18 +258,18 @@ fTX_F1 <- results(dds, contrast=c("group", "TX.F", "F1.F"))
 fTX_F1_sig<-subset(fTX_F1, padj<0.05)
 nrow(fTX_F1_sig) #311
 summary(fTX_F1_sig)
-write.csv(fTX_F1_sig, "mRNA_out/fTX_F1_sig.csv")
+write.csv(fTX_F1_sig, "ExpressionData/mRNA_out/fTX_F1_sig.csv")
 rnfTX_F1_sig<-rownames(fTX_F1_sig)
 gofTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "go_id"), values=rnfTX_F1_sig, mart=ensembl)
-write.csv(gofTX_F1_sig, "mRNA_out/gofTX_F1_sig.csv")
+write.csv(gofTX_F1_sig, "ExpressionData/mRNA_out/gofTX_F1_sig.csv")
 bmfTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rnfTX_F1_sig, mart=ensembl)
 ortho_bmfTX_F1_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rnfTX_F1_sig, mart=ensembl)
-write.csv(ortho_bmfTX_F1_sig, "mRNA_out/ortho_bmfTX_F1_sig.csv")
+write.csv(ortho_bmfTX_F1_sig, "ExpressionData/mRNA_out/ortho_bmfTX_F1_sig.csv")
 sortbmfTX_F1_sig<-cbind(bmfTX_F1_sig[match(rnfTX_F1_sig, bmfTX_F1_sig$ensembl_gene_id),])
 bmfTX_F1<-cbind(fTX_F1_sig, bmfTX_F1_sig)
-write.csv(bmfTX_F1, "mRNA_out/bmfTX_F1_sig.csv")
+write.csv(bmfTX_F1, "ExpressionData/mRNA_out/bmfTX_F1_sig.csv")
 
 
 #Merge all DE tables, collect unique IDs, fetch to cluego app and find out how may IDs are not available to be annotated there
@@ -301,20 +301,67 @@ df12$rn<-rownames(df12)
 all_rownames<-join_all(list(df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12), by = 'rn', type = 'full')
 nrow(all_rownames)
 all_rn<-all_rownames$rn
-write.csv(all_rn, "mRNA_out/all_rownames.csv")
+write.csv(all_rn, "ExpressionData/mRNA_out/all_rownames.csv")
 
 bm_all_de_entrez<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("entrezgene", "ensembl_gene_id",
                                                                                           "ensembl_transcript_id", "ensembl_peptide_id"), values=all_rn, mart=ensembl)
-write.csv((bm_all_de_entrez), "mRNA_out/bm_all_de_entrez.csv")
+write.csv((bm_all_de_entrez), "ExpressionData/mRNA_out/bm_all_de_entrez.csv")
 
 #It was found out that 
 #all_cluego<-read.csv("All_de_to_be_annotated.csv")
 #bm_all_cluego_entrez<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("entrezgene", "ensembl_gene_id",
                                                                                               "ensembl_transcript_id", "ensembl_peptide_id"), values=all_cluego, mart=ensembl)
 
-#write.csv(na.omit(bm_all_cluego_entrez), "mRNA_out/bm_all_cluego_entrez.csv")
+#write.csv(na.omit(bm_all_cluego_entrez), "ExpressionData/mRNA_out/bm_all_cluego_entrez.csv")
 
+#Venn diagrams
+library(VennDiagram)
+pdf("venn_dFS-TX-F1")
 
+vennplot<-venn.diagram(list(df4$rn, df5$rn, df6$rn), NULL, fill=c("red", "green", "yellow"), alpha=c(0.5,0.5, 0.5), cex = 2, cat.fontface=4, category.names=c("FSvsTX", "FSvsF1", "TXvsF1"))
+grid.draw(vennplot)
+dev.off()
+
+pdf("venn_dFS-TX-F1")
+
+vennplot<-draw.triple.venn(list(df7$rn, df9$rn, df11$rn), NULL, fill=c("red", "green", "yellow"), alpha=c(0.5,0.5, 0.5), cex = 2, cat.fontface=4, category.names=c("cFSvsTX", "cFSvsF1", "cTXvsF1"))
+grid.draw(vennplot)
+dev.off()
+
+vennplot<-venn.diagram(list(df8$rn, df10$rn, df12$rn), NULL, fill=c("red", "green", "yellow"), alpha=c(0.5,0.5, 0.5), cex = 2, cat.fontface=4, category.names=c("cFSvsTX", "cFSvsF1", "cTXvsF1"))
+grid.draw(vennplot)
+dev.off()
+
+baseMeanBreed <- sapply( levels(dds$breed), function(lvl) rowMeans( counts(dds,normalized=TRUE)[,dds$breed == lvl] ) )
+bm<-as.data.frame(baseMeanBreed)
+bm.fs<-bm[order(bm$FS, decreasing = TRUE),]
+bm_fs_50<-rownames(bm.fs)[1:500]
+bm.tx<-bm[order(bm$TX, decreasing = TRUE),]
+bm_tx_50<-rownames(bm.tx)[1:500]
+bm.f1<-bm[order(bm$F1, decreasing = TRUE),]
+bm_f1_50<-rownames(bm.f1)[1:500]
+
+vennplot<-venn.diagram(list(bm_fs_50, bm_tx_50, bm_f1_50), NULL, fill=c("red", "green", "yellow"), alpha=c(0.5,0.5, 0.5), cex = 2, cat.fontface=4, category.names=c("FS", "TX", "F1"))
+grid.draw(vennplot)
+dev.off()
+
+#bmdFS<-within(bmd, rm(F1, TX)) #optional to extract the subset of data frame that consist ensID for particular breed and base Mean
+#bmdF1<-within(bmd, rm(FS,TX))
+#bmdTX<-within(bmd, rm(FS,F1))
+
+bmdFS<-subset(bmd, bmd$FS)
+a<-subset(bm$FS, bm$FS>5) #16079
+head(a)
+length(bmd$F1[bmd$F1>=5]) # 17345
+
+length(bmd$TX[bmd$TX>=5]) #16039
+row.names(bmd)[which (bmd$FS>=5),]
+fs <- which(bmd$FS >=5)
+head(fs)
+head(bmd)
+head(baseMeanBreed)
+nrow(rownames(bmd$FS > 5))
+genesFS
 attr<-listAttributes(ensembl)
 head(attr, n=50)
 head(dFS_TX)
