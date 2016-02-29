@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+###################################
+#save this file and make it executable i.e chmod u+x fastq.py
+#Usage: python subsampler.py left.fastq 10000000  > subsample_left.fq
+
 import random
 import sys
  
