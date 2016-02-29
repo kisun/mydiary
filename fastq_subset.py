@@ -2,7 +2,7 @@
 
 ###################################
 #save this file and make it executable i.e chmod u+x fastq.py
-#Usage: python subsampler.py left.fastq 10000000  > subsample_left.fq
+#Usage: python fastq_subset.py file.fastq 10000000  > subsample_file.fq
 
 import random
 import sys
