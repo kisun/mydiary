@@ -387,59 +387,32 @@ typeof(dds)
 getClass(dds_fFS_TX)
 dds_fFS_TX<-(dds_fFS, dds_fTX)
 dds_fFS_TX$group
+group2<-dds_fFS_TX$group
+group2
 rld <- rlog(dds)
 
 plotPCA(rld, intgroup=c("breed", "diet"))
-data_rld<-as.data.frame(assay(rld))
-head(data_rld)
-data_FSF_TXF<-subset(data_rld, select=FSF_TXF$id)
-head(data_FSF_TXF)
-pc_FSF_TXF<-prcomp(data_FSF_TXF)
-pc_FSF_TXF
-plot(pc_FSF_TXF)
-?prcomp
-typeof(sampletable)
-sampletable1<-as.vector(sampletable)
-typeof(sampletable1)
 
-FSF<-subset(sampletable1, sampletable1$group == "FS.F")
-TXF<-subset(sampletable1, sampletable1$group == "TX.F")
-FSF_TXF<-rbind(FSF, TXF)
-typeof(FSF_TXF)             
-FSF_TXF
-head(data_FSF_TXF)
-prcomp(data_rld)
-head(assay(rld), 3)
-hist(assay(rld))
 
-# Colors for plots below
-## Ugly:
-## (mycols <- 1:length(unique(condition)))
-## Use RColorBrewer, better
-require(graphics); require(grDevices)
-library(RColorBrewer)
-(mycols <- brewer.pal(8, "Dark2")[1:length(unique(group))])
-# Sample distance heatmap
-sampleDists <- as.matrix(dist(t(assay(rld))))
-sampleDists
-library(gplots)
-png("qc-heatmap-samples.png", w=1000, h=1000, pointsize=10)
-heatmap.2(as.matrix(sampleDists), key=F, trace="none",
-          col=colorpanel(100, "black", "white"),
-          ColSideColors = mycols[group], RowSideColors = mycols[group],
-          margin=c(10, 10), main="Sample Distance Matrix")
-dev.off()
-#heatmap can be made more colorful with ColSideColors=mycols[group], RowSideColors=mycols[group],
+library("pheatmap")
+select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:37]
+nt <- normTransform(dds) # defaults to log2(x+1)
+log2.norm.counts <- assay(nt)[select,]
+df <- as.data.frame(colData(dds)[,c("condition","type")])
+pheatmap(log2.norm.counts, cluster_rows=FALSE, show_rownames=FALSE,
+         cluster_cols=FALSE, annotation_col=df)
+pheatmap(assay(rld)[select,], cluster_rows=FALSE, show_rownames=FALSE,
+         cluster_cols=FALSE, annotation_col=df)
 
 # Principal components analysis
-rld_pca <- function (rld, intgroup = "group", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
+rld_pca <- function (rld_dds_fFS_TX, intgroup = "group", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
   require(genefilter)
   require(calibrate)
   require(RColorBrewer)
-  rv = rowVars(assay(rld))
+  rv = rowVars(assay(rld_dds_fFS_TX))
   select = order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
-  pca = prcomp(t(assay(rld)[select, ]))
-  fac = factor(apply(as.data.frame(colData(rld)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
+  pca = prcomp(t(assay(rld_dds_fFS_TX)[select, ]))
+  fac = factor(apply(as.data.frame(colData(rld_dds_fFS_TX)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
   if (is.null(colors)) {
     if (nlevels(fac) >= 3) {
       colors = brewer.pal(nlevels(fac), "Paired")
@@ -459,7 +432,7 @@ rld_pca <- function (rld, intgroup = "group", ntop = 500, colors=NULL, legendpos
   #                                                                                         terldt = list(levels(fac)), rep = FALSE)))
 }
 png("qc-pca.png", 1000, 1000, pointsize=20)
-rld_pca(rld, colors=mycols, intgroup="group", xlim=c(-75, 35))
+rld_pca(rld_dds_fFS_TX, colors=NULL, intgroup="group", xlim=c(-50, 50))
 dev.off()
 
 
