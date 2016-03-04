@@ -51,7 +51,7 @@ nrow(dFS_Diet_sig)#0 i.e no effect of diet in Finnsheep
 ##########################################################################################
 dTX_Diet<-results(dds, contrast=c("group", "TX.F", "TX.C"))
 dTX_Diet_sig<-subset(dTX_Diet, padj< 0.05)
-nrow(dTX_Diet_sig)#117
+nrow(dTX_Diet_sig)#118
 summary(dTX_Diet_sig)
 write.csv(dTX_Diet_sig, "ExpressionData/mRNA_out/dTX_Diet_sig.csv")
 rndTX_Diet_sig<-rownames(dTX_Diet_sig)
@@ -75,7 +75,7 @@ write.csv(bmdTX_Diet, "ExpressionData/mRNA_out/bmdTX_Diet_sig.csv")
 ###################################################################################
 dF1_Diet<-results(dds, contrast=c("group", "F1.F", "F1.C"))
 dF1_Diet_sig<-subset(dF1_Diet, padj<0.05)
-nrow(dF1_Diet_sig)#26
+nrow(dF1_Diet_sig)#25
 summary(dF1_Diet_sig)
 write.csv(dF1_Diet_sig, "ExpressionData/mRNA_out/dF1_Diet_sig.csv")
 rndF1_Diet_sig<-rownames(dF1_Diet_sig)
@@ -95,7 +95,7 @@ write.csv(bmdF1_Diet, "ExpressionData/mRNA_out/bmdF1_Diet_sig.csv")
 ###################################################################################
 dFS_TX<-results(dds, contrast=list(c("groupFS.F", "groupTX.C"), c("groupFS.C", "groupTX.F")))
 dFS_TX_sig<-subset(dFS_TX, padj<0.05)
-nrow(dFS_TX_sig)#35
+nrow(dFS_TX_sig)#38
 summary(dFS_TX_sig)
 write.csv(dFS_TX_sig, "ExpressionData/mRNA_out/dFS_TX_sig.csv")
 rndFS_TX_sig<-rownames(dFS_TX_sig)
@@ -113,7 +113,7 @@ write.csv(bmdFS_TX, "ExpressionData/mRNA_out/bmdFS_TX_sig.csv")
 ###################################################################################
 #The difference in Finsheep and F1 due to diet effect
 ###################################################################################
-dFS_F1<-results(dds, contrast=list(c("groupFS.F", "groupF1.C"), c("groupFS.C", "groupF1.F")), test = "wald")
+dFS_F1<-results(dds, contrast=list(c("groupFS.F", "groupF1.C"), c("groupFS.C", "groupF1.F")))
 dFS_F1_sig<-subset(dFS_F1, padj<0.05)
 nrow(dFS_F1_sig) #5
 summary(dFS_F1_sig)
@@ -136,7 +136,7 @@ write.csv(bmdFS_F1, "ExpressionData/mRNA_out/bmdFS_F1_sig.csv")
 ###################################################################################
 dTX_F1<-results(dds, contrast=list(c("groupTX.F", "groupF1.C"), c("groupTX.C", "groupF1.F")))
 dTX_F1_sig<-subset(dTX_F1, padj<0.05)
-nrow(dTX_F1_sig)#73
+nrow(dTX_F1_sig)#68
 summary(dTX_F1_sig)
 write.csv(dTX_F1_sig, "ExpressionData/mRNA_out/dTX_F1_sig.csv")
 rndTX_F1_sig<-rownames(dTX_F1_sig)
@@ -176,7 +176,7 @@ write.csv(bmcFS_TX, "ExpressionData/mRNA_out/bmcFS_TX_sig.csv")
 ########################################################################################
 fFS_TX<-results(dds, contrast=c("group", "FS.F", "TX.F"))
 fFS_TX_sig<-subset(fFS_TX, padj < 0.05)
-nrow(fFS_TX_sig) #621
+nrow(fFS_TX_sig) #600
 summary(fFS_TX_sig)
 write.csv(fFS_TX_sig, "ExpressionData/mRNA_out/fFS_TX_sig.csv")
 rnfFS_TX_sig<-rownames(fFS_TX_sig)
@@ -216,7 +216,7 @@ write.csv(bmcFS_F1, "ExpressionData/mRNA_out/bmcFS_F1_sig.csv")
 ##############################################################################################
 fFS_F1 <- results(dds, contrast=c("group", "FS.F", "F1.F"))
 fFS_F1_sig<-subset(fFS_F1, padj < 0.05)
-nrow(fFS_F1_sig) #51
+nrow(fFS_F1_sig) #47
 summary(fFS_F1_sig)
 write.csv(fFS_F1_sig, "ExpressionData/mRNA_out/fFS_F1_sig.csv")
 rnfFS_F1_sig<-rownames(fFS_F1_sig)
@@ -236,7 +236,7 @@ write.csv(bmfFS_F1, "ExpressionData/mRNA_out/bmfFS_F1_sig.csv")
 ################################################################################################
 cTX_F1 <- results(dds, contrast=c("group", "TX.C", "F1.C"))
 cTX_F1_sig<-subset(cTX_F1, padj < 0.05)
-nrow(cTX_F1_sig) #60
+nrow(cTX_F1_sig) #57
 summary(cTX_F1_sig)
 write.csv(cTX_F1_sig, "ExpressionData/mRNA_out/cTX_F1_sig.csv")
 rncTX_F1_sig<-rownames(cTX_F1_sig)
@@ -256,7 +256,7 @@ write.csv(bmcTX_F1, "ExpressionData/mRNA_out/bmcTX_F1_sig.csv")
 ################################################################################################
 fTX_F1 <- results(dds, contrast=c("group", "TX.F", "F1.F"))
 fTX_F1_sig<-subset(fTX_F1, padj<0.05)
-nrow(fTX_F1_sig) #311
+nrow(fTX_F1_sig) #305
 summary(fTX_F1_sig)
 write.csv(fTX_F1_sig, "ExpressionData/mRNA_out/fTX_F1_sig.csv")
 rnfTX_F1_sig<-rownames(fTX_F1_sig)
@@ -310,7 +310,7 @@ write.csv((bm_all_de_entrez), "ExpressionData/mRNA_out/bm_all_de_entrez.csv")
 #It was found out that 
 #all_cluego<-read.csv("All_de_to_be_annotated.csv")
 #bm_all_cluego_entrez<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("entrezgene", "ensembl_gene_id",
-                                                                                              "ensembl_transcript_id", "ensembl_peptide_id"), values=all_cluego, mart=ensembl)
+#                                                                                              "ensembl_transcript_id", "ensembl_peptide_id"), values=all_cluego, mart=ensembl)
 
 #write.csv(na.omit(bm_all_cluego_entrez), "ExpressionData/mRNA_out/bm_all_cluego_entrez.csv")
 
@@ -334,7 +334,11 @@ dev.off()
 
 baseMeanBreed <- sapply( levels(dds$breed), function(lvl) rowMeans( counts(dds,normalized=TRUE)[,dds$breed == lvl] ) )
 bm<-as.data.frame(baseMeanBreed)
-bm.fs<-bm[order(bm$FS, decreasing = TRUE),]
+length(bm$FS[bm$FS >=5]) #16079, total number of genes with basemean value >= 5 in Finnsheep
+length(bm$TX[bm$TX >=5]) #16039
+length(bm$TX[bm$F1 >=5]) #17345
+
+#Venndiagram with top 500 genes in each breed
 bm_fs_50<-rownames(bm.fs)[1:500]
 bm.tx<-bm[order(bm$TX, decreasing = TRUE),]
 bm_tx_50<-rownames(bm.tx)[1:500]
@@ -349,14 +353,16 @@ dev.off()
 #bmdF1<-within(bmd, rm(FS,TX))
 #bmdTX<-within(bmd, rm(FS,F1))
 
-bmdFS<-subset(bmd, bmd$FS)
+bmFS<-subset(bm, bm$FS)
 a<-subset(bm$FS, bm$FS>5) #16079
+nrow(a)
 head(a)
 length(bmd$F1[bmd$F1>=5]) # 17345
 
-length(bmd$TX[bmd$TX>=5]) #16039
-row.names(bmd)[which (bmd$FS>=5),]
-fs <- which(bmd$FS >=5)
+length(bm$TX[bm$TX>=5]) #16039
+row.names(bm)[which (bm$FS>=5),]
+fs <- which(bm$FS >=5)
+nrow(fs)
 head(fs)
 head(bmd)
 head(baseMeanBreed)
@@ -376,29 +382,23 @@ plotDispEsts(dds, main="Dispersion plot")
 dev.off()
 
 # Regularized log transformation for clustering/heatmaps, etc
+rld <- rlog(dds)
 dds_fFS_TX<-dds[ , dds$group %in% c("FS.F" ,"TX.F")]
 #data[!(data$v1 %in% c("b", "d", "e")), ]
 rld_dds_fFS_TX<-rlog(dds_fFS_TX)
 plotPCA(rld_dds_fFS_TX, intgroup=c("breed", "diet"))
 
-dds_fFS$group
-dds_fTX<-dds[ , dds$group == "TX.F"]
-typeof(dds) 
-getClass(dds_fFS_TX)
-dds_fFS_TX<-(dds_fFS, dds_fTX)
-dds_fFS_TX$group
-group2<-dds_fFS_TX$group
-group2
-rld <- rlog(dds)
+
+
 
 plotPCA(rld, intgroup=c("breed", "diet"))
 
-
+library("DESeq2")
 library("pheatmap")
 select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:37]
 nt <- normTransform(dds) # defaults to log2(x+1)
 log2.norm.counts <- assay(nt)[select,]
-df <- as.data.frame(colData(dds)[,c("condition","type")])
+df <- as.data.frame(colData(dds)[,c("breed","diet")])
 pheatmap(log2.norm.counts, cluster_rows=FALSE, show_rownames=FALSE,
          cluster_cols=FALSE, annotation_col=df)
 pheatmap(assay(rld)[select,], cluster_rows=FALSE, show_rownames=FALSE,
