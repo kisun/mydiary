@@ -376,8 +376,40 @@ plotDispEsts(dds, main="Dispersion plot")
 dev.off()
 
 # Regularized log transformation for clustering/heatmaps, etc
-rld <- rlogTransformation(dds)
-head(assay(rld))
+dds_fFS_TX<-dds[ , dds$group %in% c("FS.F" ,"TX.F")]
+#data[!(data$v1 %in% c("b", "d", "e")), ]
+rld_dds_fFS_TX<-rlog(dds_fFS_TX)
+plotPCA(rld_dds_fFS_TX, intgroup=c("breed", "diet"))
+
+dds_fFS$group
+dds_fTX<-dds[ , dds$group == "TX.F"]
+typeof(dds) 
+getClass(dds_fFS_TX)
+dds_fFS_TX<-(dds_fFS, dds_fTX)
+dds_fFS_TX$group
+rld <- rlog(dds)
+
+plotPCA(rld, intgroup=c("breed", "diet"))
+data_rld<-as.data.frame(assay(rld))
+head(data_rld)
+data_FSF_TXF<-subset(data_rld, select=FSF_TXF$id)
+head(data_FSF_TXF)
+pc_FSF_TXF<-prcomp(data_FSF_TXF)
+pc_FSF_TXF
+plot(pc_FSF_TXF)
+?prcomp
+typeof(sampletable)
+sampletable1<-as.vector(sampletable)
+typeof(sampletable1)
+
+FSF<-subset(sampletable1, sampletable1$group == "FS.F")
+TXF<-subset(sampletable1, sampletable1$group == "TX.F")
+FSF_TXF<-rbind(FSF, TXF)
+typeof(FSF_TXF)             
+FSF_TXF
+head(data_FSF_TXF)
+prcomp(data_rld)
+head(assay(rld), 3)
 hist(assay(rld))
 
 # Colors for plots below
