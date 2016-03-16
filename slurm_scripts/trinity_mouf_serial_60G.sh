@@ -19,4 +19,6 @@ Trinity --seqType fq --max_memory 60G --trimmomatic --normalize_reads --left \
 --SS_lib_type RF --CPU $SLURM_CPUS_PER_TASK --output /wrk/kipokh/Data/Mouflon/trinity_mouf_results_serial_60G \
 --grid_conf $TRINITY_HOME/hpc_conf/taito.slurm
 
-
+#The best one line command to get the trinity assembly from raw fastq.gz files. It does the trimming as well as normalization of 
+#highly duplicated (>50) reads and fasten up the assembly process and needs significantly less memory. It took only a couple 
+#of days to assemble around 500million raw reads .
