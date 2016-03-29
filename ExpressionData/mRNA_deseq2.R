@@ -21,6 +21,7 @@ sampleFiles<-grep("counts", list.files(directory), value = TRUE)
 sampleFiles<-list.files(directory, pattern = "*_counts")
 sampleFiles
 sampleinfo<-read.csv("ExpressionData/SampleTable_mRNA_all.csv", header=TRUE)
+sampleinfo
 row.names(sampleinfo)
 sample<-sampleinfo$Sample
 breed<-sampleinfo$Breed
@@ -383,6 +384,7 @@ dev.off()
 
 # Regularized log transformation for clustering/heatmaps, etc
 rld <- rlog(dds)
+
 dds_fFS_TX<-dds[ , dds$group %in% c("FS.F" ,"TX.F")]
 #data[!(data$v1 %in% c("b", "d", "e")), ]
 rld_dds_fFS_TX<-rlog(dds_fFS_TX)
@@ -398,11 +400,12 @@ library("pheatmap")
 select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:37]
 nt <- normTransform(dds) # defaults to log2(x+1)
 log2.norm.counts <- assay(nt)[select,]
+head(log2.norm.counts)
 df <- as.data.frame(colData(dds)[,c("breed","diet")])
 pheatmap(log2.norm.counts, cluster_rows=FALSE, show_rownames=FALSE,
          cluster_cols=FALSE, annotation_col=df)
-pheatmap(assay(rld)[select,], cluster_rows=FALSE, show_rownames=FALSE,
-         cluster_cols=FALSE, annotation_col=df)
+#pheatmap(assay(rld)[select,], cluster_rows=FALSE, show_rownames=FALSE,
+#         cluster_cols=FALSE, annotation_col=df)
 
 # Principal components analysis
 rld_pca <- function (rld_dds_fFS_TX, intgroup = "group", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
