@@ -1,0 +1,8 @@
+#Downloading files from FTP/HTTP site with username and password
+
+ftp --user=username --password=password http/ftp file
+
+#Example:
+
+wget --user=F15FTUHT1107 --password=RieNDnluD ftp://cdts-wh.genomics.cn/02.assembly/rm_pollu.scafSeq
+
