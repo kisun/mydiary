@@ -309,11 +309,13 @@ bm_all_de_entrez<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", att
 write.csv((bm_all_de_entrez), "ExpressionData/mRNA_out/bm_all_de_entrez.csv")
 
 #It was found out that 
-#all_cluego<-read.csv("All_de_to_be_annotated.csv")
-#bm_all_cluego_entrez<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("entrezgene", "ensembl_gene_id",
-#                                                                                              "ensembl_transcript_id", "ensembl_peptide_id"), values=all_cluego, mart=ensembl)
-
-#write.csv(na.omit(bm_all_cluego_entrez), "ExpressionData/mRNA_out/bm_all_cluego_entrez.csv")
+all_cluego<-read.csv("ExpressionData/mRNA_out/cluego_unannotated", header = T)
+head(all_cluego)
+bm_all_cluego_entrez<-unique(getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("entrezgene", "ensembl_gene_id",
+                                                                                              "ensembl_transcript_id", "ensembl_peptide_id"), values=all_cluego, mart=ensembl))
+bm_all_cluego_entrez
+tail(bm_all_cluego_entrez)
+write.csv(na.omit(bm_all_cluego_entrez), "ExpressionData/mRNA_out/bm_all_cluego_entrez1.csv")
 
 #Venn diagrams
 library(VennDiagram)

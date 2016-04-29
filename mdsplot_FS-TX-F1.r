@@ -15,10 +15,14 @@ qq(gwasResults$P)
 mds<-read.table("IBS-MDS/MDS_FS-TX-F1_mibs.mds", header=T)
 head(mds)
 ids<-read.table("IBS-MDS/familyid.csv", header=T)
+ids
 colnames(ids)<-c("FID", "FS", "TX", "F1", "Breed")
 Breed<-ids$Breed
+FID<-ids$FID
+FID
 mds1<-data.frame(mds, Breed)
 qplot(C1, C2, data=mds1, color=Breed, alpha=I(0.5), size=I(3))
+#qplot(C1, C2, data=mds1, color=Breed, alpha=I(0.5), size=I(3), label=FID, geom = "text") #to get labels for all samples
 
 
 mds_king<-read.table("/media/ejo129/somics/Data/SNP_genotype_data/Release_020414/Oct15/FS-TX-F1/kingpc1.csv", header=T)

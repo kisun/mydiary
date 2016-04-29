@@ -1,21 +1,24 @@
-Genes	# comparisons	Gene Name	Source						
-ENSOARG00000012224	5	BMX	orthology						
-ENSOARG00000008913	5	CSRP3							
-ENSOARG00000000531	5	ARGHEF18	blast	http://www.ncbi.nlm.nih.gov/pubmed/14512443	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1221462/				
-ENSOARG00000012165	5	ADAMTSL5		http://www.sciencedirect.com/science/article/pii/S0945053X1500058X	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2909279/	http://www.biolreprod.org/content/72/5/1241.abstract?ijkey=ba42b6ea52e089d91391e67a2b5ac910cd0bc939&keytype2=tf_ipsecsha	http://www.annualreviews.org/doi/pdf/10.1146/annurev.physiol.64.081501.131029	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4285216/	http://humrep.oxfordjournals.org/content/22/1/63.full
-ENSOARG00000001346	5	CST6		http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4651506/	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4373033/	http://www.biolreprod.org/content/87/1/9.full	http://www.cbra.org.br/pages/publicacoes/animalreproduction/issues/download/v10n3/p239-251%20(AR627).pdf		
-ENSOARG00000005014	5	ABLIM3		http://molehr.oxfordjournals.org/content/16/4/229.full.pdf					
-ENSOARG00000012206	5	CA5A							
-ENSOARG00000001554	4	FBLN2							
-ENSOARG00000005722	4	EPAS1		http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2807638/	http://press.endocrine.org/doi/full/10.1210/jc.2008-0588	http://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-40	http://onlinelibrary.wiley.com/doi/10.1111/age.12420/full	http://www.biolreprod.org/content/71/4/1108.full	http://gbe.oxfordjournals.org/content/early/2012/02/14/gbe.evs013.full.pdf
-ENSOARG00000017011	4	CYP7B1	??	http://www.pnas.org/content/102/8/2814.abstract?ijkey=889b997d943d90bef83a832f675e8f4996d82043&keytype2=tf_ipsecsha					
-ENSOARG00000017264	1	BMP6		http://rbej.biomedcentral.com/articles/10.1186/1477-7827-4-20					
-		CNTN4							
-	1	HBB							
-		MEPE							
-		PAPPA							
-		SCARB1		http://genesdev.cshlp.org/content/22/14/1871.full					
-		CYP11A1		http://genesdev.cshlp.org/content/22/14/1871.full					
-		SLC7A11							
-		GRAMD1B							
-		CD36		http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3984690/	http://press.endocrine.org/doi/pdf/10.1210/en.2007-1570				
+Genes	# comparisons	BaseMeanCount	Upregulated in	Gene Name	Source	Function						
+ENSOARG00000012224	5	612.6714485274	Texel ( flushing group)	BMX*	orthology							
+ENSOARG00000008913	5	73.4049798703		CSRP3		unknown	http://www.funpecrp.com.br/gmr/year2015/vol14-4/pdf/gmr6884.pdf	http://www.reproduction-online.org/content/141/2/193.full.pdf				
+ENSOARG00000000531	5	2035.986418176	Finnsheep and F1 (flushing)	ARGHEF18*	blast		http://www.ncbi.nlm.nih.gov/pubmed/14512443	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1221462/				
+ENSOARG00000012165	5			ADAMTSL5			http://www.sciencedirect.com/science/article/pii/S0945053X1500058X	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2909279/	http://www.biolreprod.org/content/72/5/1241.abstract?ijkey=ba42b6ea52e089d91391e67a2b5ac910cd0bc939&keytype2=tf_ipsecsha	http://www.annualreviews.org/doi/pdf/10.1146/annurev.physiol.64.081501.131029	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4285216/	http://humrep.oxfordjournals.org/content/22/1/63.full
+ENSOARG00000001346	5			CST6			http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4651506/	http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4373033/	http://www.biolreprod.org/content/87/1/9.full	http://www.cbra.org.br/pages/publicacoes/animalreproduction/issues/download/v10n3/p239-251%20(AR627).pdf		
+ENSOARG00000005014	5			ABLIM3			http://molehr.oxfordjournals.org/content/16/4/229.full.pdf					
+ENSOARG00000012206	5			CA5A								
+ENSOARG00000001554	4			FBLN2								
+ENSOARG00000005722	4			EPAS1			http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2807638/	http://press.endocrine.org/doi/full/10.1210/jc.2008-0588	http://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-40	http://onlinelibrary.wiley.com/doi/10.1111/age.12420/full	http://www.biolreprod.org/content/71/4/1108.full	http://gbe.oxfordjournals.org/content/early/2012/02/14/gbe.evs013.full.pdf
+ENSOARG00000017011	4			CYP7B1	??		http://www.pnas.org/content/102/8/2814.abstract?ijkey=889b997d943d90bef83a832f675e8f4996d82043&keytype2=tf_ipsecsha					
+ENSOARG00000017264	1			BMP6			http://rbej.biomedcentral.com/articles/10.1186/1477-7827-4-20					
+				CNTN4								
+	1			HBB								
+				MEPE								
+				PAPPA								
+				SCARB1			http://genesdev.cshlp.org/content/22/14/1871.full					
+				CYP11A1			http://genesdev.cshlp.org/content/22/14/1871.full					
+				SLC7A11								
+				GRAMD1B								
+				CD36			http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3984690/	http://press.endocrine.org/doi/pdf/10.1210/en.2007-1570				
+ENSOARG00000011449	3			PRLR								
+												
+* - based on homology based blast search												
