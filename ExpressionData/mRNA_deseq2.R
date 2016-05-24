@@ -339,7 +339,7 @@ baseMeanBreed <- sapply( levels(dds$breed), function(lvl) rowMeans( counts(dds,n
 bm<-as.data.frame(baseMeanBreed)
 length(bm$FS[bm$FS >=5]) #16079, total number of genes with basemean value >= 5 in Finnsheep
 length(bm$TX[bm$TX >=5]) #16039
-length(bm$TX[bm$F1 >=5]) #17345
+length(bm$F1[bm$F1 >=5]) #17345
 
 #Venndiagram with top 500 genes in each breed
 bm_fs_50<-rownames(bm.fs)[1:500]
@@ -391,11 +391,12 @@ dds_fFS_TX<-dds[ , dds$group %in% c("FS.F" ,"TX.F")]
 #data[!(data$v1 %in% c("b", "d", "e")), ]
 rld_dds_fFS_TX<-rlog(dds_fFS_TX)
 plotPCA(rld_dds_fFS_TX, intgroup=c("breed", "diet"))
-
-
-
-
 plotPCA(rld, intgroup=c("breed", "diet"))
+
+dds_fTX_F1<-dds[ , dds$group %in% c("TX.F" ,"F1.F")]
+#data[!(data$v1 %in% c("b", "d", "e")), ]
+rld_dds_fTX_F1<-rlog(dds_fTX_F1)
+plotPCA(rld_dds_fTX_F1, intgroup=c("breed", "diet"))
 
 library("DESeq2")
 library("pheatmap")
