@@ -10,6 +10,8 @@ library("gplots")
 register(MulticoreParam(6))
 #listMarts(host='www.ensembl.org')
 ensembl = useEnsembl(biomart = "ENSEMBL_MART_ENSEMBL", dataset="oaries_gene_ensembl")
+ensembl2 = useEnsembl(biomart = "ENSEMBL_MART_ENSEMBL", dataset = "btaurus_gene_ensembl")
+ensembl3 = useEnsembl(biomart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
 #ensembl = useDataset("oaries_gene_ensembl", mart = ensembl)
 #ensembl = useMart(biomart = "ENSEMBL_MART_ENSEMBL",dataset="oaries_gene_ensembl", host = "jul2015.archive.ensembl.org")
 #Features (exons) for each sample were counted using HTSeq-count. We will use those counts for the analysis.
@@ -41,6 +43,7 @@ dds<-DESeq(ddsHTSeqcol)
 dds
 res<-results(dds)
 res_baseMean5 <- subset(dds, res$baseMean > 5)
+head(res_baseMean5)
 nrow(res_baseMean5)#16 402
 #The effect of diet in Finnsheep. i.e Finnsheep with flushing diet vs Finnsheep with control diet.
 dFS_Diet<-results(dds, contrast=c("group", "FS.F", "FS.C"))
@@ -65,6 +68,7 @@ bmdTX_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attri
 #In case some unknown genes in sheep are annotated in other species, it has also been useful to do the GO annotation and KEGG pathways using cow homologs as it's genome is much more annotated.
 ortho_bmdTX_Diet_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                               "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rndTX_Diet_sig, mart=ensembl)
+
 
 write.csv(ortho_bmdTX_Diet_sig, "ExpressionData/mRNA_out/ortho_bmdTX_diet_sig.csv")
 sortbmdTX_Diet_sig<-cbind(bmdTX_Diet_sig[match(rndTX_Diet_sig, bmdTX_Diet_sig$ensembl_gene_id),])
@@ -186,11 +190,157 @@ write.csv(gofFS_TX_sig, "ExpressionData/mRNA_out/gofFS_TX_sig.csv")
 bmfFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id",
                                                                                       "external_gene_name", "chromosome_name", "description"), values=rnfFS_TX_sig, mart=ensembl)
 ortho_bmfFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
-                                                                                            "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene"), values=rnfFS_TX_sig, mart=ensembl)
+                                                                                            "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene", "hsapiens_homolog_canonical_transcript_protein"), values=rnfFS_TX_sig, mart=ensembl)
 write.csv(ortho_bmfFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmfFS_TX_sig.csv")
+btaurus_id<-ortho_bmfFS_TX_sig$btaurus_homolog_ensembl_gene
+head(bmfFS_TX_sig$ensembl_gene_id)
+hs_id<-ortho_bmfFS_TX_sig$hsapiens_homolog_ensembl_gene
+head(hs_id)
+hs_id1<-unique(hs_id)
+head(hs_id1)
+nrow(hs_id1)
+utr_bmfFS_TX_sig<-getSequence(seqType = "3utr", mart = ensembl, type = "ensembl_gene_id", id = rnfFS_TX_sig)
+head(utr_bmfFS_TX_sig)
+utr_bta_bmfFS_TX_sig<-getSequence(seqType = "3utr", mart = ensembl2, type = "ensembl_gene_id", id = btaurus_id)
+head(utr_bta_bmfFS_TX_sig)
+write.csv(utr_bmfFS_TX_sig, "3utr_bmfFS_TX_sig.csv")
+write.csv(utr_bta_bmfFS_TX_sig, "3utr_bta_bmfFS_TX_sig.csv")
 sortbmfFS_TX_sig<-cbind(bmfFS_TX_sig[match(rnfFS_TX_sig, bmfFS_TX_sig$ensembl_gene_id),])
 bmfFS_TX<-cbind(fFS_TX_sig, bmfFS_TX_sig)
 write.csv(bmfFS_TX, "ExpressionData/mRNA_out/bmfFS_TX_sig.csv")
+
+#miR432
+ts_miR432<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-432.predicted_targets.csv", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR432_3<-ts_miR432[which(ts_miR432$V11 >= -0.3),]
+ts_miR432_3$V2<-sub("\\.\\d$", "", ts_miR432_3$V2)
+colnames(ts_miR432_3)<-ts_miR432_3[1,]
+ts_miR432_3<-ts_miR432_3[-1,]
+tail(ts_miR432_3)
+rownames(ts_miR432_3)<-NULL
+ts_miR432_3<-head(ts_miR432_3, -4)
+write.csv(ts_miR432_3, "ExpressionData/targetscan/fFS-TX/ts_miR432_3_mod.csv")
+hs_ens_geneid<-getBM(c("hsapiens_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "ensembl_transcript_id"), values=hs_id1, mart = ensembl3)
+write.csv(hs_ens_geneid, "ExpressionData/targetscan/fFS-TX/transcript_geneid_fFS_TX.csv")
+names(hs_ens_geneid)[2]<-paste("hs_transcript")
+names(ts_miR432_3)[2]<-paste("hs_transcript")
+lista<-list(hs_ens_geneid, ts_miR432_3)
+merged_lista = Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), lista)
+write.csv(merged_lista, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR432_3.csv")
+
+
+#miR-433-3p
+ts_miR433<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-433-3p.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR433_3<-ts_miR433[which(ts_miR433$V11 >= -0.3),]
+ts_miR433_3$V2<-sub("\\.\\d$", "", ts_miR433_3$V2)
+colnames(ts_miR433_3)<-ts_miR433_3[1,]
+ts_miR433_3<-ts_miR433_3[-1,]
+tail(ts_miR433_3)
+rownames(ts_miR433_3)<-NULL
+ts_miR433_3<-head(ts_miR433_3, -4)
+write.csv(ts_miR433_3, "ExpressionData/targetscan/fFS-TX/ts_miR433_3_mod.csv")
+names(ts_miR433_3)[2]<-paste("hs_transcript")
+list_miR433_3<-list(hs_ens_geneid, ts_miR433_3)
+merged_list_miR433_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR433_3)
+merged_list_miR433_3
+write.csv(merged_list_miR433_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR433_3.csv")
+
+#miR-2285-m-3
+ts_miR2285m3<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-2285m.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR2285m3_3<-ts_miR2285m3[which(ts_miR2285m3$V11 >= -0.3),]
+ts_miR2285m3_3$V2<-sub("\\.\\d$", "", ts_miR2285m3_3$V2)
+colnames(ts_miR2285m3_3)<-ts_miR2285m3_3[1,]
+ts_miR2285m3_3<-ts_miR2285m3_3[-1,]
+tail(ts_miR2285m3_3, n=20)
+ts_miR2285m3_3<-head(ts_miR2285m3_3, -7)
+rownames(ts_miR2285m3_3)<-NULL
+write.csv(ts_miR2285m3_3, "ExpressionData/targetscan/fFS-TX/ts_miR2285m3_3_mod.csv")
+names(ts_miR2285m3_3)[2]<-paste("hs_transcript")
+list_miR2285m3_3<-list(hs_ens_geneid, ts_miR2285m3_3)
+merged_list_miR2285m3_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR2285m3_3)
+merged_list_miR2285m3_3
+write.csv(merged_list_miR2285m3_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR2285m3_3.csv")
+
+#miR-326
+ts_miR326<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-326.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR326_3<-ts_miR326[which(ts_miR326$V11 >= -0.3),]
+ts_miR326_3$V2<-sub("\\.\\d$", "", ts_miR326_3$V2)
+colnames(ts_miR326_3)<-ts_miR326_3[1,]
+ts_miR326_3<-ts_miR326_3[-1,]
+tail(ts_miR326_3, 20)
+ts_miR326_3<-head(ts_miR326_3, -11)
+dim(ts_miR326)
+dim(ts_miR326_3)
+rownames(ts_miR326_3)<-NULL
+write.csv(ts_miR326_3, "ExpressionData/targetscan/fFS-TX/ts_miR326_3_mod.csv")
+names(ts_miR326_3)[2]<-paste("hs_transcript")
+list_miR326_3<-list(hs_ens_geneid, ts_miR326_3)
+merged_list_miR326_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR326_3)
+merged_list_miR326_3
+write.csv(merged_list_miR326_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR326_3.csv")
+
+#miR-130a
+ts_miR130a<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-130_301_454.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR130a_3<-ts_miR130a[which(ts_miR130a$V15 >= -0.3),]
+ts_miR130a_3$V2<-sub("\\.\\d$", "", ts_miR130a_3$V2)
+colnames(ts_miR130a_3)<-ts_miR130a_3[1,]
+ts_miR130a_3<-ts_miR130a_3[-1,]
+tail(ts_miR130a_3, 40)
+ts_miR130a_3<-head(ts_miR130a_3, -30)
+rownames(ts_miR130a_3)<-NULL
+write.csv(ts_miR130a_3, "ExpressionData/targetscan/fFS-TX/ts_miR130a_3_mod.csv")
+names(ts_miR130a_3)[2]<-paste("hs_transcript")
+list_miR130a_3<-list(hs_ens_geneid, ts_miR130a_3)
+merged_list_miR130a_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR130a_3)
+merged_list_miR130a_3
+write.csv(merged_list_miR130a_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR130a_3.csv")
+
+#miR-2284
+ts_miR2284<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-2284_2285.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR2284_3<-ts_miR2284[which(ts_miR2284$V11 >= -0.3),]
+ts_miR2284_3$V2<-sub("\\.\\d$", "", ts_miR2284_3$V2)
+colnames(ts_miR2284_3)<-ts_miR2284_3[1,]
+ts_miR2284_3<-ts_miR2284_3[-1,]
+tail(ts_miR2284_3, 20)
+ts_miR2284_3<-head(ts_miR2284_3, -18)
+rownames(ts_miR2284_3)<-NULL
+write.csv(ts_miR2284_3, "ExpressionData/targetscan/fFS-TX/ts_miR2284_3_mod.csv")
+names(ts_miR2284_3)[2]<-paste("hs_transcript")
+list_miR2284_3<-list(hs_ens_geneid, ts_miR2284_3)
+merged_list_miR2284_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR2284_3)
+merged_list_miR2284_3
+write.csv(merged_list_miR2284_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR2284_3.csv")
+
+#miR-1468
+ts_miR1468<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-1468.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR1468_3<-ts_miR1468[which(ts_miR1468$V11 >= -0.3),]
+ts_miR1468_3$V2<-sub("\\.\\d$", "", ts_miR1468_3$V2)
+colnames(ts_miR1468_3)<-ts_miR1468_3[1,]
+ts_miR1468_3<-ts_miR1468_3[-1,]
+tail(ts_miR1468_3, 20)
+ts_miR1468_3<-head(ts_miR1468_3, -14)
+rownames(ts_miR1468_3)<-NULL
+write.csv(ts_miR1468_3, "ExpressionData/targetscan/fFS-TX/ts_miR1468_3_mod.csv")
+names(ts_miR1468_3)[2]<-paste("hs_transcript")
+list_miR1468_3<-list(hs_ens_geneid, ts_miR1468_3)
+merged_list_miR1468_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR1468_3)
+merged_list_miR1468_3
+write.csv(merged_list_miR1468_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR1468_3.csv")
+
+#miR-361
+ts_miR361<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-130_301_454.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR361_3<-ts_miR361[which(ts_miR361$V11 >= -0.3),]
+ts_miR361_3$V2<-sub("\\.\\d$", "", ts_miR361_3$V2)
+colnames(ts_miR361_3)<-ts_miR361_3[1,]
+ts_miR361_3<-ts_miR361_3[-1,]
+tail(ts_miR361_3, 40)
+ts_miR361_3<-head(ts_miR361_3, -30)
+rownames(ts_miR361_3)<-NULL
+write.csv(ts_miR361_3, "ExpressionData/targetscan/fFS-TX/ts_miR361_3_mod.csv")
+names(ts_miR361_3)[2]<-paste("hs_transcript")
+list_miR361_3<-list(hs_ens_geneid, ts_miR361_3)
+merged_list_miR361_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR361_3)
+merged_list_miR361_3
+write.csv(merged_list_miR361_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR361_3.csv")
 
 ##############################################################################################
 #The difference between Finnsheep and F1 with control diet
@@ -447,13 +597,13 @@ res <- results(dds)
 res
 table(res$padj<0.05)
 ## Order by adjusted p-value
-res <- res[order(res$padj), ]
+res <- res[order(res$baseMean, decreasing = TRUE), ]
 ## Merge with normalized count data
 resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by="row.names", sort=FALSE)
 names(resdata)[1] <- "Gene"
 head(resdata)
 ## Write results
-write.csv(resdata, file="diffexpr-results.csv")
+write.csv(resdata, file="ExpressionData/mRNA_out/diffexpr-results.csv")
 
 ## Examine plot of p-values
 hist(res$pvalue, breaks=50, col="grey")

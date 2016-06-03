@@ -22,14 +22,23 @@ head(misampleinfo)
 misample<-misampleinfo$Sample
 mibreed<-misampleinfo$Breed
 midiet<-misampleinfo$Diet
-misampletable<-data.frame(sample=misample, breed=mibreed, diet=midiet)
+miid<-misampleinfo$SampleID
+misampletable<-data.frame(sample=misample, breed=mibreed, diet=midiet, id=miid)
 migroup<-factor(paste(mibreed, midiet, sep="."))
 misampletable<-cbind(misampletable, migroup=migroup)
 misampletable
-colnames(micountdata)<-misampletable$sample
+#colnames(micountdata)<-misampletable$sample
 middsMat<-DESeqDataSetFromMatrix(countData=micountdata, colData=misampletable, design=~migroup)
 midds<-DESeq(middsMat)
 miexpre_all<-results(midds)
+miexpre_all<-miexpre_all[order(miexpre_all$baseMean, decreasing = TRUE),]
+miexpre_data<-merge(as.data.frame(miexpre_all), as.data.frame(counts(midds, normalized=TRUE)), by="row.names", sort=FALSE)
+names(miexpre_data)[1]<-"miRNA"
+colnames(miexpre_data)[8:44]<-as.vector(miid) #i found that the sample names are not labeled instead it was just 1,2,3,4.. so 
+#I converted the dataframe of sample IDs into character vector and renamed columns.
+write.csv(miexpre_data, file="ExpressionData/miRNA_out/diffexpr_miRNA_results.csv")
+
+
 miexpre_bm5<-subset(midds,miexpre_all$baseMean >=5 )
 miexpre_bm50<-subset(midds, miexpre_all$baseMean >=50)
 miexpre_bm100<-subset(midds, miexpre_all$baseMean >= 100)
@@ -39,7 +48,7 @@ nrow(miexpre_bm100)#191 (123 novel)
 miexpre_bm100_data<-mcols(miexpre_bm100, use.names=TRUE)
 #write.csv(expre_bm100_data, "novelmiRNAsBaseMeangeq100.csv")
 miexpre_bm10<-subset(midds, miexpre_all$baseMean>=10)
-nrow(miexpre_bm10)# 342 (238 novel)
+nrow(miexpre_bm10)# 340 (236 novel)
 miexpre_bm10_data<-mcols(miexpre_bm10, use.names=TRUE)
 write.csv(miexpre_bm10_data, "ExpressionData/miRNA_out/known_novelmiRNAsBaseMeangeq10.csv")
 
@@ -115,9 +124,11 @@ nrow(midknTX_F1_sig)#0
 
 midknfFS_TX<-results(midds, contrast=c("migroup", "FS.F", "TX.F"))
 midknfFS_TX_sig<-subset(midknfFS_TX, padj<0.05)
-nrow(midknfFS_TX_sig) #0
-#summary(midknfFS_TX_sig)
-#write.csv(midknfFS_TX_sig, "ExpressionData/miRNA_out/midknfFS_TX_sig.csv")
+nrow(midknfFS_TX_sig) #8
+summary(midknfFS_TX_sig)
+write.csv(midknfFS_TX_sig, "ExpressionData/miRNA_out/midknfFS_TX_sig.csv")
+
+ts_miR432<-read.table("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-432.predicted_targets.txt", sep = "\t", fill = FALSE)
 
 midkncFS_TX<-results(midds, contrast=c("migroup", "FS.C", "TX.C"))
 midkncFS_TX_sig<-subset(midkncFS_TX, padj < 0.05)
