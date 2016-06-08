@@ -175,6 +175,68 @@ write.csv(ortho_bmcFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmcFS_TX_sig.csv")
 sortbmcFS_TX_sig<-cbind(bmcFS_TX_sig[match(rncFS_TX_sig, bmcFS_TX_sig$ensembl_gene_id),])
 bmcFS_TX<-cbind(cFS_TX_sig, bmcFS_TX_sig)
 write.csv(bmcFS_TX, "ExpressionData/mRNA_out/bmcFS_TX_sig.csv")
+#Biomartstuff
+hs_id_cFS_TX<-ortho_bmcFS_TX_sig$hsapiens_homolog_ensembl_gene
+head(hs_id_cFS_TX)
+hs_id1_cFS_TX<-unique(hs_id_cFS_TX)
+head(hs_id1_cFS_TX)
+hs_ens_geneid_cFS_TX<-getBM(c("hsapiens_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "ensembl_transcript_id"), values=hs_id1_cFS_TX, mart = ensembl3)
+names(hs_ens_geneid_cFS_TX)[2]<-paste("hs_transcript")
+head(hs_ens_geneid_cFS_TX)
+write.csv(hs_ens_geneid_cFS_TX, "ExpressionData/targetscan/cFS-TX/transcript_geneid_cFS_TX.csv")
+
+#miR6529
+ts_miR6529<-read.csv("ExpressionData/targetscan/cFS-TX/TargetScan7.0__miR-6529b.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR6529_3<-ts_miR6529[which(ts_miR6529$V11 >= -0.3),]
+ts_miR6529_3$V2<-sub("\\.\\d$", "", ts_miR6529_3$V2)
+colnames(ts_miR6529_3)<-ts_miR6529_3[1,]
+ts_miR6529_3<-ts_miR6529_3[-1,]
+tail(ts_miR6529_3)
+rownames(ts_miR6529_3)<-NULL
+ts_miR6529_3<-head(ts_miR6529_3, -1)
+write.csv(ts_miR6529_3, "ExpressionData/targetscan/cFS-TX/ts_miR6529_3_mod.csv")
+names(ts_miR6529_3)[2]<-paste("hs_transcript")
+list_miR6529_3<-list(hs_ens_geneid_cFS_TX, ts_miR6529_3)
+merged_list_miR6529_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR6529_3)
+merged_list_miR6529_3
+write.csv(merged_list_miR6529_3, "ExpressionData/targetscan/cFS-TX/DE_targets_DE_miRNAs_miR6529_3.csv")
+
+#miR192
+ts_miR192<-read.csv("ExpressionData/targetscan/cFS-TX/TargetScan7.0__miR-192_215.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR192_3<-ts_miR192[which(ts_miR192$V15 >= -0.3),]
+ts_miR192_3$V2<-sub("\\.\\d$", "", ts_miR192_3$V2)
+colnames(ts_miR192_3)<-ts_miR192_3[1,]
+ts_miR192_3<-ts_miR192_3[-1,]
+tail(ts_miR192_3, 20)
+rownames(ts_miR192_3)<-NULL
+ts_miR192_3<-head(ts_miR192_3, -6)
+write.csv(ts_miR192_3, "ExpressionData/targetscan/cFS-TX/ts_miR192_3_mod.csv")
+names(ts_miR192_3)[2]<-paste("hs_transcript")
+list_miR192_3<-list(hs_ens_geneid_cFS_TX, ts_miR192_3)
+merged_list_miR192_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR192_3)
+merged_list_miR192_3
+write.csv(merged_list_miR192_3, "ExpressionData/targetscan/cFS-TX/DE_targets_DE_miRNAs_miR192_3.csv")
+
+#miR151
+ts_miR151<-read.csv("ExpressionData/targetscan/cFS-TX/TargetScan7.0__miR-151-5p.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR151_3<-ts_miR151[which(ts_miR151$V11 >= -0.3),]
+ts_miR151_3$V2<-sub("\\.\\d$", "", ts_miR151_3$V2)
+colnames(ts_miR151_3)<-ts_miR151_3[1,]
+ts_miR151_3<-ts_miR151_3[-1,]
+tail(ts_miR151_3, 40)
+rownames(ts_miR151_3)<-NULL
+ts_miR151_3<-head(ts_miR151_3, -31)
+write.csv(ts_miR151_3, "ExpressionData/targetscan/cFS-TX/ts_miR151_3_mod.csv")
+names(ts_miR151_3)[2]<-paste("hs_transcript")
+list_miR151_3<-list(hs_ens_geneid_cFS_TX, ts_miR151_3)
+merged_list_miR151_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR151_3)
+merged_list_miR151_3
+write.csv(merged_list_miR151_3, "ExpressionData/targetscan/cFS-TX/DE_targets_DE_miRNAs_miR151_3.csv")
+
+
+
+
+
 
 #######################################################################################
 #The difference between Finnsheep and Texel with flushing diet
@@ -192,22 +254,20 @@ bmfFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attribu
 ortho_bmfFS_TX_sig<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "external_gene_name",
                                                                                             "btaurus_homolog_ensembl_gene", "sscrofa_homolog_ensembl_gene", "mmusculus_homolog_ensembl_gene", "hsapiens_homolog_ensembl_gene", "hsapiens_homolog_canonical_transcript_protein"), values=rnfFS_TX_sig, mart=ensembl)
 write.csv(ortho_bmfFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmfFS_TX_sig.csv")
-btaurus_id<-ortho_bmfFS_TX_sig$btaurus_homolog_ensembl_gene
-head(bmfFS_TX_sig$ensembl_gene_id)
+
+sortbmfFS_TX_sig<-cbind(bmfFS_TX_sig[match(rnfFS_TX_sig, bmfFS_TX_sig$ensembl_gene_id),])
+bmfFS_TX<-cbind(fFS_TX_sig, bmfFS_TX_sig)
+write.csv(bmfFS_TX, "ExpressionData/mRNA_out/bmfFS_TX_sig.csv")
+
+#Biomartstuff
 hs_id<-ortho_bmfFS_TX_sig$hsapiens_homolog_ensembl_gene
 head(hs_id)
 hs_id1<-unique(hs_id)
 head(hs_id1)
 nrow(hs_id1)
-utr_bmfFS_TX_sig<-getSequence(seqType = "3utr", mart = ensembl, type = "ensembl_gene_id", id = rnfFS_TX_sig)
-head(utr_bmfFS_TX_sig)
-utr_bta_bmfFS_TX_sig<-getSequence(seqType = "3utr", mart = ensembl2, type = "ensembl_gene_id", id = btaurus_id)
-head(utr_bta_bmfFS_TX_sig)
-write.csv(utr_bmfFS_TX_sig, "3utr_bmfFS_TX_sig.csv")
-write.csv(utr_bta_bmfFS_TX_sig, "3utr_bta_bmfFS_TX_sig.csv")
-sortbmfFS_TX_sig<-cbind(bmfFS_TX_sig[match(rnfFS_TX_sig, bmfFS_TX_sig$ensembl_gene_id),])
-bmfFS_TX<-cbind(fFS_TX_sig, bmfFS_TX_sig)
-write.csv(bmfFS_TX, "ExpressionData/mRNA_out/bmfFS_TX_sig.csv")
+hs_ens_geneid<-getBM(c("hsapiens_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "ensembl_transcript_id"), values=hs_id1, mart = ensembl3)
+write.csv(hs_ens_geneid, "ExpressionData/targetscan/fFS-TX/transcript_geneid_fFS_TX.csv")
+names(hs_ens_geneid)[2]<-paste("hs_transcript")
 
 #miR432
 ts_miR432<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-432.predicted_targets.csv", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
@@ -219,9 +279,6 @@ tail(ts_miR432_3)
 rownames(ts_miR432_3)<-NULL
 ts_miR432_3<-head(ts_miR432_3, -4)
 write.csv(ts_miR432_3, "ExpressionData/targetscan/fFS-TX/ts_miR432_3_mod.csv")
-hs_ens_geneid<-getBM(c("hsapiens_gene_ensembl"), filters="ensembl_gene_id", attributes=c("ensembl_gene_id", "ensembl_transcript_id"), values=hs_id1, mart = ensembl3)
-write.csv(hs_ens_geneid, "ExpressionData/targetscan/fFS-TX/transcript_geneid_fFS_TX.csv")
-names(hs_ens_geneid)[2]<-paste("hs_transcript")
 names(ts_miR432_3)[2]<-paste("hs_transcript")
 lista<-list(hs_ens_geneid, ts_miR432_3)
 merged_lista = Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), lista)
@@ -327,13 +384,13 @@ merged_list_miR1468_3
 write.csv(merged_list_miR1468_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR1468_3.csv")
 
 #miR-361
-ts_miR361<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-130_301_454.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
+ts_miR361<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-361.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
 ts_miR361_3<-ts_miR361[which(ts_miR361$V11 >= -0.3),]
 ts_miR361_3$V2<-sub("\\.\\d$", "", ts_miR361_3$V2)
 colnames(ts_miR361_3)<-ts_miR361_3[1,]
 ts_miR361_3<-ts_miR361_3[-1,]
-tail(ts_miR361_3, 40)
-ts_miR361_3<-head(ts_miR361_3, -30)
+tail(ts_miR361_3, 10)
+ts_miR361_3<-head(ts_miR361_3, -6)
 rownames(ts_miR361_3)<-NULL
 write.csv(ts_miR361_3, "ExpressionData/targetscan/fFS-TX/ts_miR361_3_mod.csv")
 names(ts_miR361_3)[2]<-paste("hs_transcript")
@@ -341,6 +398,7 @@ list_miR361_3<-list(hs_ens_geneid, ts_miR361_3)
 merged_list_miR361_3<-Reduce(function(...) merge(..., by=c("hs_transcript"), all=F), list_miR361_3)
 merged_list_miR361_3
 write.csv(merged_list_miR361_3, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_miR361_3.csv")
+
 
 ##############################################################################################
 #The difference between Finnsheep and F1 with control diet
@@ -498,7 +556,7 @@ bm_tx_50<-rownames(bm.tx)[1:500]
 bm.f1<-bm[order(bm$F1, decreasing = TRUE),]
 bm_f1_50<-rownames(bm.f1)[1:500]
 
-vennplot<-venn.diagram(list(bm_fs_50, bm_tx_50, bm_f1_50), NULL, fill=c("red", "green", "yellow"), alpha=c(0.5,0.5, 0.5), cex = 2, cat.fontface=4, category.names=c("FS", "TX", "F1"))
+vennplot<-venn.diagram(list(bm_fs_50, bm_tx_50, bm_f1_50), NULL, fill=c(1, 2, 3), alpha=c(0.5,0.5, 0.5), resolution = 500, cex = 1.5, cat.fontface="plain", cat.fontfamily="serif", category.names=c("FS", "TX", "F1"))
 grid.draw(vennplot)
 dev.off()
 
@@ -550,15 +608,34 @@ plotPCA(rld_dds_fTX_F1, intgroup=c("breed", "diet"))
 
 library("DESeq2")
 library("pheatmap")
-select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:37]
+select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:20]
 nt <- normTransform(dds) # defaults to log2(x+1)
 log2.norm.counts <- assay(nt)[select,]
 head(log2.norm.counts)
 df <- as.data.frame(colData(dds)[,c("breed","diet")])
-pheatmap(log2.norm.counts, cluster_rows=FALSE, show_rownames=FALSE,
-         cluster_cols=FALSE, annotation_col=df)
+pheatmap(log2.norm.counts, cluster_rows=TRUE, show_rownames=TRUE,
+         cluster_cols=TRUE, annotation_col=df)
 #pheatmap(assay(rld)[select,], cluster_rows=FALSE, show_rownames=FALSE,
 #         cluster_cols=FALSE, annotation_col=df)
+
+library("genefilter")
+topVarGenes <- head(order(rowVars(assay(rld)),decreasing=TRUE),20)
+mat <- assay(rld)[ topVarGenes, ]
+mat <- mat - rowMeans(mat)
+df <- as.data.frame(colData(rld)[,c("breed","diet")])
+pheatmap(mat, annotation_col=df)
+
+#samplematrix
+sampleDists <- dist( t( assay(rld) ) )
+sampleDists
+sampleDistMatrix <- as.matrix( sampleDists )
+#rownames(sampleDistMatrix) <- paste( rld$breed, rld$diet, sep="-" )
+colnames(sampleDistMatrix) <- NULL
+colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows=sampleDists,
+         clustering_distance_cols=sampleDists,
+         col=colors, annotation_row = df, show_rownames = TRUE, show_colnames = TRUE)
 
 # Principal components analysis
 rld_pca <- function (rld_dds_fFS_TX, intgroup = "group", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
@@ -617,7 +694,7 @@ plot(attr(res,"filterNumRej"), type="b", xlab="quantiles of baseMean", ylab="num
 ## DESeq2::plotMA(dds, ylim=c(-1,1), cex=1)
 ## I like mine better:
 library(calibrate)
-maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
+maplot <- function (res, thresh=0.05, labelsig=FALSE, textcx=1, ...) {
   with(res, plot(baseMean, log2FoldChange, pch=20, cex=.5, log="x", ...))
   with(subset(res, padj<thresh), points(baseMean, log2FoldChange, col="red", pch=20, cex=1.5))
   if (labelsig) {
@@ -629,8 +706,10 @@ png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
 maplot(resdata, main="MA Plot")
 dev.off()
 
+plotMA(res, ylim=c(-3, 3))
+
 ## Volcano plot with "significant" genes labeled, one example
-volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=TRUE, textcx=1, ...) {
+volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=FALSE, textcx=1, ...) {
   with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=main, ...))
   with(subset(res, padj<sigthresh ), points(log2FoldChange, -log10(pvalue), pch=20, col="red", ...))
   with(subset(res, abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="orange", ...))
@@ -645,12 +724,12 @@ png("diffexpr-volcanoplot.png", 1200, 1000, pointsize=20)
 volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
 dev.off()
 
-select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:30]
+select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:20]
 hmcol <- colorRampPalette(brewer.pal(9, "GnBu"))(100)
 heatmap.2(counts(dds,normalized=TRUE)[select,], col = hmcol,
           Rowv = FALSE, Colv = FALSE, scale="none",
-          dendrogram="none", trace="none", margin=c(10,6))
+          dendrogram="none", trace="none", margin=c(8,10))
 
 heatmap.2(assay(rld)[select,], col = hmcol,
           Rowv = FALSE, Colv = FALSE, scale="none",
-          dendrogram="none", trace="none", margin=c(10, 6))
+          dendrogram="none", trace="none", margin=c(8, 12))
