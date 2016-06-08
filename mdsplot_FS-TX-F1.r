@@ -28,7 +28,7 @@ qplot(C1, C2, data=mds1, color=Breed, alpha=I(0.5), size=I(3))
 mds_king<-read.table("/media/ejo129/somics/Data/SNP_genotype_data/Release_020414/Oct15/FS-TX-F1/kingpc1.csv", header=T)
 head(mds_king)
 mds_king1<-data.frame(mds_king, Breed)
-qplot(C1, C2, data=mds_king1, color = Breed, alpha=I(0.5), size=I(3))
+qplot(C1, C2, data=mds_king1, color = Breed, alpha=I(0.9), size=I(2))
 
 FS<-1:11
 TX<-12:22
