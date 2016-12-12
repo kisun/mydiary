@@ -1,4 +1,5 @@
-gene,efficiency
+miRNA,efficiency
+U6,2
 MiRNA_3_686,2
 MiRNA_2_411,2
 MiRNA_2_431,2
@@ -7,4 +8,4 @@ MiRNA_3_667,2
 MiRNA_24_581,2
 MiRNA_13_203,2
 MiRNA_3_646,2
-miRNA_X_887,2
+MiRNA_X_887,2

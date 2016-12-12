@@ -257,6 +257,7 @@ write.csv(ortho_bmfFS_TX_sig, "ExpressionData/mRNA_out/ortho_bmfFS_TX_sig.csv")
 
 sortbmfFS_TX_sig<-cbind(bmfFS_TX_sig[match(rnfFS_TX_sig, bmfFS_TX_sig$ensembl_gene_id),])
 bmfFS_TX<-cbind(fFS_TX_sig, bmfFS_TX_sig)
+
 write.csv(bmfFS_TX, "ExpressionData/mRNA_out/bmfFS_TX_sig.csv")
 
 #Biomartstuff
@@ -271,6 +272,7 @@ names(hs_ens_geneid)[2]<-paste("hs_transcript")
 
 #miR432
 ts_miR432<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-432.predicted_targets.csv", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+head(ts_miR432)
 ts_miR432_3<-ts_miR432[which(ts_miR432$V11 >= -0.3),]
 ts_miR432_3$V2<-sub("\\.\\d$", "", ts_miR432_3$V2)
 colnames(ts_miR432_3)<-ts_miR432_3[1,]
@@ -288,6 +290,7 @@ write.csv(merged_lista, "ExpressionData/targetscan/fFS-TX/DE_targets_DE_miRNAs_m
 #miR-433-3p
 ts_miR433<-read.csv("ExpressionData/targetscan/fFS-TX/TargetScan7.0__miR-433-3p.predicted_targets.txt", header=FALSE, sep = "\t", stringsAsFactors = FALSE)
 ts_miR433_3<-ts_miR433[which(ts_miR433$V11 >= -0.3),]
+head(ts_miR433$V11)
 ts_miR433_3$V2<-sub("\\.\\d$", "", ts_miR433_3$V2)
 colnames(ts_miR433_3)<-ts_miR433_3[1,]
 ts_miR433_3<-ts_miR433_3[-1,]
@@ -618,12 +621,45 @@ pheatmap(log2.norm.counts, cluster_rows=TRUE, show_rownames=TRUE,
 #pheatmap(assay(rld)[select,], cluster_rows=FALSE, show_rownames=FALSE,
 #         cluster_cols=FALSE, annotation_col=df)
 
+#List of top variable genes across samples
 library("genefilter")
 topVarGenes <- head(order(rowVars(assay(rld)),decreasing=TRUE),20)
+topVarGenes
+
 mat <- assay(rld)[ topVarGenes, ]
+mat
 mat <- mat - rowMeans(mat)
+
 df <- as.data.frame(colData(rld)[,c("breed","diet")])
 pheatmap(mat, annotation_col=df)
+
+#Access all results of dds and get all values for the list of genes with high variance
+res<-results(dds)
+df_res<-as.data.frame(res)
+names<-rownames(df_res)
+rownames(df_res)<-NULL
+library(data.table)
+setDT(df_res, keep.rownames = TRUE)[]
+colnames(df_res)<-c("ENSID", "baseMean", "log2FoldChange", "lfcSE", "dtat", "pvalue", "padj")
+write.csv(df_res, file = "all_expressed_genes.csv")
+
+#Annotate topvar genes
+topVarGenes_EnsID <- rownames(mat)
+topVarGenes_EnsID
+bm_topVarGenes_EnsID<-getBM(c("oaries_gene_ensembl"), filters="ensembl_gene_id", attributes=c("entrezgene", "ensembl_gene_id", "external_gene_name", "chromosome_name", "description")
+                            , values=topVarGenes_EnsID, mart=ensembl)
+head(bm_topVarGenes_EnsID)
+topvarIds<-df_res[df_res$ENSID %in% bm_topVarGenes_EnsID$ensembl_gene_id,]
+#topvarIds[order(match(topvarIds$ENSID, topVarGenes_EnsID)),] #for sorting according to topvarGenes_EnsID but does not work nicely
+head(topvarIds)
+
+write.csv(topvarIds, file = "topVariedGenes.csv")
+
+
+
+
+
+
 
 #samplematrix
 sampleDists <- dist( t( assay(rld) ) )
@@ -733,3 +769,7 @@ heatmap.2(counts(dds,normalized=TRUE)[select,], col = hmcol,
 heatmap.2(assay(rld)[select,], col = hmcol,
           Rowv = FALSE, Colv = FALSE, scale="none",
           dendrogram="none", trace="none", margin=c(8, 12))
+
+
+slices <- c(628394, 163569, 142673, 163346)
+pie(slices)
