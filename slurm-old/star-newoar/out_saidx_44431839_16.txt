@@ -1,0 +1,2 @@
+Analysing sample file: 3609eAligned.sortedByCoord.out.bam
+-rw------- 1 kipokh ponkamo 6484859452 Jul 16 16:23 3609eAligned.sortedByCoord.out.bam

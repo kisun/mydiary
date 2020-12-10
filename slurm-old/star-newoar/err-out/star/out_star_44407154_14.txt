@@ -1,0 +1,11 @@
+Jul 16 15:32:49 ..... started STAR run
+Jul 16 15:32:49 ..... loading genome
+Jul 16 15:34:05 ..... processing annotations GTF
+Jul 16 15:34:10 ..... inserting junctions into the genome indices
+Jul 16 15:35:36 ..... started 1st pass mapping
+Jul 16 15:47:30 ..... finished 1st pass mapping
+Jul 16 15:47:30 ..... inserting junctions into the genome indices
+Jul 16 15:49:29 ..... started mapping
+Jul 16 16:03:55 ..... finished mapping
+Jul 16 16:04:00 ..... started sorting BAM
+Jul 16 16:05:29 ..... finished successfully

@@ -1,0 +1,2 @@
+Analysing sample file: 107AcAligned.sortedByCoord.out.bam
+-rw------- 1 kipokh ponkamo 7414780035 Jul 16 14:51 107AcAligned.sortedByCoord.out.bam

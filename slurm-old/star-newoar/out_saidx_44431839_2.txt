@@ -1,0 +1,2 @@
+Analysing sample file: 1033eAligned.sortedByCoord.out.bam
+-rw------- 1 kipokh ponkamo 7511275178 Jul 16 14:52 1033eAligned.sortedByCoord.out.bam
